@@ -5,6 +5,7 @@
 #include "ModulePhysics.h"
 #include "p2Point.h"
 #include "math.h"
+#include "ModuleTextures.h"
 
 #ifdef _DEBUG
 #pragma comment( lib, "Box2D/libx86/Debug/Box2D.lib" )
@@ -32,7 +33,7 @@ bool ModulePhysics::Start()
 	world = new b2World(b2Vec2(GRAVITY_X, -GRAVITY_Y));
 	world->SetContactListener(this);
 
-	CreatePinballTable();
+	FlipandoEstoy();
 
 	return true;
 }
@@ -56,62 +57,42 @@ update_status ModulePhysics::PreUpdate()
 	return UPDATE_CONTINUE;
 }
 
-void ModulePhysics::CreatePinballTable()
+void ModulePhysics::FlipandoEstoy()
 {
-	b2BodyDef bd;
-	bd.position.Set(PIXEL_TO_METERS(SCREEN_WIDTH / 2), PIXEL_TO_METERS(SCREEN_HEIGHT / 2));
-	b2Body* ground = world->CreateBody(&bd);
+	leftFlipper = CreateRectangle(leftFlipperX, leftFlipperY, flipperWidth, flipperHeight);
+	leftFlipperAnchor = CreateCircle(leftFlipperX, leftFlipperY, 2);
+	leftFlipperAnchor->body->SetType(b2_staticBody);
 
-	b2Vec2 vs[5];
-	vs[0].Set(PIXEL_TO_METERS(-SCREEN_WIDTH / 2), PIXEL_TO_METERS(-SCREEN_HEIGHT / 2));
-	vs[1].Set(PIXEL_TO_METERS(SCREEN_WIDTH / 2), PIXEL_TO_METERS(-SCREEN_HEIGHT / 2));
-	vs[2].Set(PIXEL_TO_METERS(SCREEN_WIDTH / 2), PIXEL_TO_METERS(SCREEN_HEIGHT / 2));
-	vs[3].Set(PIXEL_TO_METERS(-SCREEN_WIDTH / 2), PIXEL_TO_METERS(SCREEN_HEIGHT / 2));
-	vs[4].Set(PIXEL_TO_METERS(-SCREEN_WIDTH / 2), PIXEL_TO_METERS(-SCREEN_HEIGHT / 2));
+	b2RevoluteJointDef leftFlipperJointDef;
 
-	b2ChainShape chain;
-	chain.CreateChain(vs, 5);
-	ground->CreateFixture(&chain, 0.0f);
+	leftFlipperJointDef.bodyA = leftFlipper->body;
+	leftFlipperJointDef.bodyB = leftFlipperAnchor->body;
+	leftFlipperJointDef.referenceAngle = 0 * DEGTORAD;
+	leftFlipperJointDef.enableLimit = true;
+	leftFlipperJointDef.lowerAngle = -30 * DEGTORAD;
+	leftFlipperJointDef.upperAngle = 30 * DEGTORAD;
+	leftFlipperJointDef.localAnchorA.Set(PIXEL_TO_METERS(-13), 0);
+	leftFlipperJointDef.localAnchorB.Set(0, 0);
+	b2RevoluteJoint* leftFlipperJoint = (b2RevoluteJoint*)App->physics->world->CreateJoint(&leftFlipperJointDef);
 
-	b2Vec2 pivot(0.0f, PIXEL_TO_METERS(SCREEN_HEIGHT - 10)); 
+	rightFlipper = CreateRectangle(rightFlipperX, rightFlipperY, flipperWidth, flipperHeight);
+	rightFlipperAnchor = CreateCircle(rightFlipperX, rightFlipperY, 2);
+	rightFlipperAnchor->body->SetType(b2_staticBody);
 
-	b2PolygonShape flipperShape;
-	flipperShape.SetAsBox(PIXEL_TO_METERS(20), PIXEL_TO_METERS(5)); 
+	b2RevoluteJointDef rightFlipperJointDef;
 
-	b2RevoluteJointDef jointDef;
-	jointDef.bodyA = ground;
-	jointDef.enableMotor = true;
-	jointDef.maxMotorTorque = 10000.0f;
-	jointDef.enableLimit = true;
+	rightFlipperJointDef.bodyA = rightFlipper->body;
+	rightFlipperJointDef.bodyB = rightFlipperAnchor->body;
+	rightFlipperJointDef.referenceAngle = 0 * DEGTORAD;
+	rightFlipperJointDef.enableLimit = true;
+	rightFlipperJointDef.lowerAngle = -30 * DEGTORAD;
+	rightFlipperJointDef.upperAngle = 30 * DEGTORAD;
+	rightFlipperJointDef.localAnchorA.Set(PIXEL_TO_METERS(13), 0);
+	rightFlipperJointDef.localAnchorB.Set(0, 0);
+	b2RevoluteJoint* rightFlipperJoint = (b2RevoluteJoint*)App->physics->world->CreateJoint(&rightFlipperJointDef);
 
-	bd.type = b2_dynamicBody;
-	bd.position = pivot + b2Vec2(PIXEL_TO_METERS(-100), 0.0f); 
-	bd.angle = -30 * DEGTORAD;
-	b2Body* leftFlipper = world->CreateBody(&bd);
-	leftFlipper->CreateFixture(&flipperShape, 1.0f);
-
-	jointDef.bodyB = leftFlipper;
-	jointDef.localAnchorA = pivot + b2Vec2(PIXEL_TO_METERS(-30), 1.5f); 
-	jointDef.localAnchorB.Set(0, 0);
-	jointDef.motorSpeed = 0;
-	jointDef.lowerAngle = -35 * DEGTORAD;
-	jointDef.upperAngle = 30 * DEGTORAD;
-
-	leftFlipperJoint = (b2RevoluteJoint*)world->CreateJoint(&jointDef);
-
-	// Flipper derecho
-	bd.position = pivot + b2Vec2(PIXEL_TO_METERS(100), 0.0f); 
-	bd.angle = -30 * DEGTORAD;
-	b2Body* rightFlipper = world->CreateBody(&bd);
-	rightFlipper->CreateFixture(&flipperShape, 1.0f);
-
-	jointDef.bodyB = rightFlipper;
-	jointDef.localAnchorA = pivot + b2Vec2(PIXEL_TO_METERS(35), 1.5f);
-	jointDef.motorSpeed = 0.001f;
-	jointDef.lowerAngle = -30 * DEGTORAD; 
-	jointDef.upperAngle = 35 * DEGTORAD;
-
-	rightFlipperJoint = (b2RevoluteJoint*)world->CreateJoint(&jointDef);
+	flipTexture1 = App->textures->Load("fliptex.png");
+	flipTexture2 = App->textures->Load("fliptex.png");
 }
 
 PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
@@ -128,7 +109,7 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
 	fixture.shape = &shape;
 	fixture.density = 1.0f;
 
-	fixture.restitution = 0.5f;
+	fixture.restitution = 0.3f;
 
 	b->CreateFixture(&fixture);
 
@@ -140,6 +121,31 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
 	return pbody;
 }
 
+PhysBody* ModulePhysics::CreateCoin(int x, int y, int radius)
+{
+	b2BodyDef body;
+	body.type = b2_kinematicBody;
+	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+
+	b2Body* b = world->CreateBody(&body);
+
+	b2CircleShape shape;
+	shape.m_radius = PIXEL_TO_METERS(radius);
+	b2FixtureDef fixture;
+	fixture.shape = &shape;
+	fixture.density = 1.0f;
+
+	fixture.isSensor = true;
+
+	b->CreateFixture(&fixture);
+
+	PhysBody* pbody = new PhysBody();
+	pbody->body = b;
+	b->SetUserData(pbody);
+	pbody->width = pbody->height = radius;
+
+	return pbody;
+}
 
 
 PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
@@ -269,6 +275,13 @@ update_status ModulePhysics::PostUpdate()
 
 	if(!debug)
 		return UPDATE_CONTINUE;
+
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+		leftFlipper->body->ApplyForceToCenter(b2Vec2(0, -200), 1);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+		rightFlipper->body->ApplyForceToCenter(b2Vec2(0, -200), 1);
+	}
 
 	// Bonus code: this will iterate all objects in the world and draw the circles
 	// You need to provide your own macro to translate meters to pixels

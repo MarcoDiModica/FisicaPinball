@@ -43,6 +43,7 @@ public:
 	bool CleanUp();
 
 	PhysBody* CreateCircle(int x, int y, int radius);
+	PhysBody* CreateCoin(int x, int y, int radius);
 	PhysBody* CreateRectangle(int x, int y, int width, int height);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size);
@@ -50,10 +51,20 @@ public:
 
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
-	void CreatePinballTable();
+	void FlipandoEstoy();
 
-	b2RevoluteJoint* leftFlipperJoint;
-	b2RevoluteJoint* rightFlipperJoint;
+	int leftFlipperX = 175;
+	int leftFlipperY = 615;
+	int rightFlipperX = 265;
+	int rightFlipperY = 615;
+	int flipperWidth = 40;
+	int flipperHeight = 10;
+	PhysBody* leftFlipper;
+	PhysBody* rightFlipper;
+	PhysBody* leftFlipperAnchor;
+	PhysBody* rightFlipperAnchor;
+	SDL_Texture* flipTexture1;
+	SDL_Texture* flipTexture2;
 
 private:
 
