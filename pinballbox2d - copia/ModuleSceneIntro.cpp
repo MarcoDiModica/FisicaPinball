@@ -30,6 +30,56 @@ bool ModuleSceneIntro::Start()
 	//rick = App->textures->Load("pinball/rick_head.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
+	
+	int mapa_de_sonic[90] = {
+	349, 254,
+	365, 262,
+	379, 267,
+	421, 292,
+	422, 265,
+	422, 41,
+	14, 41,
+	13, 689,
+	202, 689,
+	202, 677,
+	138, 641,
+	138, 628,
+	129, 621,
+	109, 622,
+	98, 621,
+	45, 651,
+	45, 679,
+	19, 679,
+	17, 628,
+	68, 600,
+	68, 501,
+	65, 486,
+	44, 478,
+	30, 466,
+	16, 443,
+	16, 420,
+	23, 400,
+	36, 388,
+	49, 379,
+	66, 374,
+	80, 375,
+	92, 378,
+	108, 389,
+	95, 370,
+	106, 370,
+	114, 362,
+	116, 354,
+	120, 347,
+	118, 333,
+	99, 301,
+	99, 256,
+	102, 248,
+	103, 125,
+	344, 125,
+	344, 252
+	};
+	App->physics->CreateStaticChain(0,0,mapa_de_sonic,90);
+
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 
 	return ret;
