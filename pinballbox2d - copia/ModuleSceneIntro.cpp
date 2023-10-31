@@ -48,20 +48,20 @@ update_status ModuleSceneIntro::Update()
 {
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		App->physics->leftFlipperJoint->SetMotorSpeed(-10);
+		App->physics->leftFlipperJoint->SetMotorSpeed(-40);
 	}
 	else
 	{
-		App->physics->leftFlipperJoint->SetMotorSpeed(10);
+		App->physics->leftFlipperJoint->SetMotorSpeed(40);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		App->physics->rightFlipperJoint->SetMotorSpeed(10);
+		App->physics->rightFlipperJoint->SetMotorSpeed(40);
 	}
 	else
 	{
-		App->physics->rightFlipperJoint->SetMotorSpeed(-10);
+		App->physics->rightFlipperJoint->SetMotorSpeed(-40);
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
@@ -69,7 +69,7 @@ update_status ModuleSceneIntro::Update()
 		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 25));
 		circles.getLast()->data->listener = this;
 	}
-	App->renderer->Blit(map, 0, 0, &maprect);
+	App->renderer->Blit(map,0,0,&maprect);
 
 
 	return UPDATE_CONTINUE;

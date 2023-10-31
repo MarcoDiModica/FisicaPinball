@@ -76,7 +76,7 @@ void ModulePhysics::CreatePinballTable()
 	b2Vec2 pivot(0.0f, PIXEL_TO_METERS(SCREEN_HEIGHT - 10)); 
 
 	b2PolygonShape flipperShape;
-	flipperShape.SetAsBox(PIXEL_TO_METERS(50), PIXEL_TO_METERS(10)); 
+	flipperShape.SetAsBox(PIXEL_TO_METERS(20), PIXEL_TO_METERS(5)); 
 
 	b2RevoluteJointDef jointDef;
 	jointDef.bodyA = ground;
@@ -91,7 +91,7 @@ void ModulePhysics::CreatePinballTable()
 	leftFlipper->CreateFixture(&flipperShape, 1.0f);
 
 	jointDef.bodyB = leftFlipper;
-	jointDef.localAnchorA = pivot + b2Vec2(PIXEL_TO_METERS(-100), 0.0f); 
+	jointDef.localAnchorA = pivot + b2Vec2(PIXEL_TO_METERS(-30), 1.5f); 
 	jointDef.localAnchorB.Set(0, 0);
 	jointDef.motorSpeed = 0;
 	jointDef.lowerAngle = -35 * DEGTORAD;
@@ -106,7 +106,7 @@ void ModulePhysics::CreatePinballTable()
 	rightFlipper->CreateFixture(&flipperShape, 1.0f);
 
 	jointDef.bodyB = rightFlipper;
-	jointDef.localAnchorA = pivot + b2Vec2(PIXEL_TO_METERS(100), 0.0f);
+	jointDef.localAnchorA = pivot + b2Vec2(PIXEL_TO_METERS(35), 1.5f);
 	jointDef.motorSpeed = 0.001f;
 	jointDef.lowerAngle = -30 * DEGTORAD; 
 	jointDef.upperAngle = 35 * DEGTORAD;
