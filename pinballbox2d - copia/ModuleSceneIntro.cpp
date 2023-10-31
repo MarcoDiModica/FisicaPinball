@@ -101,6 +101,23 @@ update_status ModuleSceneIntro::Update()
 		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 10));
 		circles.getLast()->data->listener = this;
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	{
+		ball = App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 10);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+	{
+		ball->body->GetFixtureList()->SetRestitution(0.7f);
+		App->physics->restitution = 0.7f;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+	{
+		ball->body->GetFixtureList()->SetRestitution(0.3f);
+		App->physics->restitution = 0.3f;
+	}
+
 	//App->renderer->Blit(map,0,0,&maprect);
 
 

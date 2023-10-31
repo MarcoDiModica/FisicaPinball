@@ -66,6 +66,8 @@ public:
 	SDL_Texture* flipTexture1;
 	SDL_Texture* flipTexture2;
 
+	float restitution = 0.3f;
+
 private:
 
 	float GRAVITY_Y = -7.0f;

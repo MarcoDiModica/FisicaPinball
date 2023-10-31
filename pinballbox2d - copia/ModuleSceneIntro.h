@@ -37,6 +37,8 @@ public:
 	p2List<PhysBody*> circles;
 	p2List<PhysBody*> boxes;
 	p2List<PhysBody*> ricks;
+
+	PhysBody* ball;
 };
 
 #endif // __MODULESCENEINTRO_H__
