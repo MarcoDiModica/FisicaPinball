@@ -26,6 +26,7 @@ ModulePhysics::~ModulePhysics()
 
 bool ModulePhysics::Start()
 {
+	// it may work now
 	LOG("Creating Physics 2D environment");
 
 	world = new b2World(b2Vec2(GRAVITY_X, -GRAVITY_Y));
