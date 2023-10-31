@@ -30,6 +30,8 @@ public:
 	SDL_Texture* circle;
 	SDL_Texture* box;
 	SDL_Texture* rick;
+	SDL_Texture* map;
+	SDL_Rect maprect;
 	uint bonus_fx;
 
 	p2List<PhysBody*> circles;

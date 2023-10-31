@@ -21,8 +21,10 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
+	maprect = {0,0,436, 699};
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
+	map = App->textures->Load("pinball/mapa_de_sonic.png");
 	circle = App->textures->Load("pinball/wheel.png"); 
 	//box = App->textures->Load("pinball/crate.png");
 	//rick = App->textures->Load("pinball/rick_head.png");
@@ -67,6 +69,8 @@ update_status ModuleSceneIntro::Update()
 		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 25));
 		circles.getLast()->data->listener = this;
 	}
+	App->renderer->Blit(map, 0, 0, &maprect);
+
 
 	return UPDATE_CONTINUE;
 }
