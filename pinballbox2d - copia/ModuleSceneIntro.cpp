@@ -105,9 +105,91 @@ bool ModuleSceneIntro::Start()
 	306, 626,
 	305, 636
 	};
+
+	int CenterWall[46] = {
+	162, 218,
+	234, 218,
+	234, 172,
+	238, 163,
+	243, 158,
+	253, 158,
+	313, 218,
+	313, 268,
+	343, 284,
+	305, 323,
+	305, 459,
+	290, 474,
+	290, 356,
+	282, 337,
+	269, 322,
+	252, 312,
+	241, 310,
+	224, 310,
+	207, 314,
+	197, 324,
+	185, 336,
+	154, 303,
+	154, 232
+	};
+	int LeftPolyBumper[16] = {
+	137, 562,
+	154, 573,
+	159, 572,
+	160, 566,
+	144, 520,
+	140, 518,
+	133, 525,
+	133, 557
+	};
+
+	int RightPolyBumper[16] = {
+		280, 567,
+	284, 572,
+	303, 564,
+	308, 558,
+	308, 527,
+	300, 519
+	};
+
+	int LeftFlipperWall[18] = {
+		101, 526,
+	101, 569,
+	109, 575,
+	111, 580,
+	166, 608,
+	164, 615,
+	108, 587,
+	98, 587,
+	98, 531
+	};
+
+	int RightFlipperWall[16] = {
+		275, 606,
+	275, 616,
+	333, 587,
+	342, 586,
+	342, 526,
+	339, 526,
+	339, 568,
+	330, 578
+	};
+
+	
+
 	App->physics->CreateStaticChain(0,0,mapa_de_sonic,90);
 	App->physics->CreateStaticChain(420, 300, Right_Wall, 26);
 	App->physics->CreateStaticChain(0 , 0, Right_DownWall, 16);
+	App->physics->CreateStaticChain(0, 0, CenterWall, 46);
+
+	App->physics->CreateStaticChain(0, 0, LeftFlipperWall, 18);
+	App->physics->CreateStaticChain(0, 0, RightFlipperWall, 16);
+	
+	// --- polygon bumpers---//
+	App->physics->CreateStaticChain(0, 0, LeftPolyBumper, 16, 0.7f, 0.2f);
+	App->physics->CreateStaticChain(0, 0, RightPolyBumper, 12, 0.7f, 0.2f);
+
+	PhysBody* EggHead1 =  App->physics->CreateStaticCircle(234, 360, 25, 0.2f);
+	PhysBody* EggHead2 = App->physics->CreateStaticCircle(71, 432, 25, 0.2f);
 
 	bumper1 = new Bumper(309, 335, *App->physics);
 	bumper2 = new Bumper(370,356, *App->physics);
