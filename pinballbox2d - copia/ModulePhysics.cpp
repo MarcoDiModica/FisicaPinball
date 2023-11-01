@@ -95,10 +95,10 @@ void ModulePhysics::FlipandoEstoy()
 	flipTexture2 = App->textures->Load("fliptex.png");
 }
 
-PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
+PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, float Friction, float Restitution, b2BodyType myType)
 {
 	b2BodyDef body;
-	body.type = b2_dynamicBody;
+	body.type = myType;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
 	b2Body* b = world->CreateBody(&body);
@@ -109,7 +109,7 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
 	fixture.shape = &shape;
 	fixture.density = 1.0f;
 
-	fixture.restitution = restitution;
+	fixture.restitution = Restitution;
 
 	b->CreateFixture(&fixture);
 
@@ -234,7 +234,7 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size)
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateStaticChain(int x, int y, int* points, int size)
+PhysBody* ModulePhysics::CreateStaticChain(int x, int y, int* points, int size, float Restitution, float Friction )
 {
 	b2BodyDef body;
 	body.type = b2_staticBody;
@@ -254,6 +254,10 @@ PhysBody* ModulePhysics::CreateStaticChain(int x, int y, int* points, int size)
 	shape.CreateLoop(p, size / 2);
 
 	b2FixtureDef fixture;
+
+	fixture.restitution = Restitution; 
+	fixture.friction = Friction;
+
 	fixture.shape = &shape;
 
 	b->CreateFixture(&fixture);

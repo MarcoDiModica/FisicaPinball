@@ -1,5 +1,6 @@
 #pragma once
 #include "Module.h"
+#include "Application.h"
 #include "Globals.h"
 #include "Box2D/Box2D/Box2D.h"
 
@@ -30,10 +31,16 @@ public:
 	Module* listener;
 };
 
+class ModulePhysics ;
+
+
+
 // Module --------------------------------------
 class ModulePhysics : public Module, public b2ContactListener // TODO
 {
 public:
+
+
 	ModulePhysics(Application* app, bool start_enabled = true);
 	~ModulePhysics();
 
@@ -42,12 +49,12 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-	PhysBody* CreateCircle(int x, int y, int radius);
+	PhysBody* CreateCircle(int x, int y, int radius, float Friction = 0.2f , float Restitution = 0.3f, b2BodyType myType = b2BodyType::b2_dynamicBody);
 	PhysBody* CreateCoin(int x, int y, int radius);
 	PhysBody* CreateRectangle(int x, int y, int width, int height);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size);
-	PhysBody* CreateStaticChain(int x, int y, int* points, int size);
+	PhysBody* ModulePhysics::CreateStaticChain(int x, int y, int* points, int size, float Restitution = 0, float Friction = 0.2f);
 
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
@@ -68,6 +75,8 @@ public:
 
 	float restitution = 0.3f;
 
+	
+
 private:
 
 	float GRAVITY_Y = -7.0f;
@@ -78,3 +87,4 @@ private:
 
 	friend class ModuleDebug;
 };
+

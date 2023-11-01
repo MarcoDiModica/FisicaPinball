@@ -1,0 +1,9 @@
+// Pivot 0, 0
+int mapa_de_sonic - copia - copia[2] = {
+	324, 631
+};
+
+// Pivot 0.000000, 0.000000
+float mapa_de_sonic - copia - copia[2] = {
+	0.743119f, 0.902718f
+};

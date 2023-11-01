@@ -11,6 +11,22 @@
 struct PhysBody;
 struct PhysMotor;
 
+class Bumper {
+
+	PhysBody* pBody = nullptr;
+
+public:
+	ModulePhysics* myPhysics;
+
+	Bumper(int x, int y, ModulePhysics Physics) {
+
+		this->myPhysics = &Physics;
+		pBody = myPhysics->CreateCircle(x, y, 13, 0, 1.2f, b2BodyType::b2_staticBody);
+
+	}
+
+};
+
 class ModuleSceneIntro : public Module
 {
 public:
@@ -38,7 +54,14 @@ public:
 	p2List<PhysBody*> boxes;
 	p2List<PhysBody*> ricks;
 
+	//---------Phyisical Bodies of the scene-----------//
+
 	PhysBody* ball;
+
+	Bumper* bumper1;
+	Bumper* bumper2;
+	Bumper* bumper3;
+
 };
 
 #endif // __MODULESCENEINTRO_H__

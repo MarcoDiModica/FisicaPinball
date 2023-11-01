@@ -78,7 +78,42 @@ bool ModuleSceneIntro::Start()
 	344, 125,
 	344, 252
 	};
+
+	int Right_Wall[26] = {
+	-45, -2,
+	-46, 40,
+	-34, 50,
+	-33, 64,
+	-45, 73,
+	-45, 92,
+	-76, 125,
+	-76, 179,
+	-46, 209,
+	-46, 237,
+	-46, 303,
+	-22, 314,
+	-21, 17
+	};
+
+	int Right_DownWall[16] = {
+	236, 676,
+	236, 688,
+	397, 688,
+	397, 651,
+	346, 627,
+	335, 618,
+	306, 626,
+	305, 636
+	};
 	App->physics->CreateStaticChain(0,0,mapa_de_sonic,90);
+	App->physics->CreateStaticChain(420, 300, Right_Wall, 26);
+	App->physics->CreateStaticChain(0 , 0, Right_DownWall, 16);
+
+	bumper1 = new Bumper(309, 335, *App->physics);
+	bumper2 = new Bumper(370,356, *App->physics);
+	bumper2 = new Bumper(309, 389, *App->physics);
+	
+
 
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 
@@ -118,7 +153,7 @@ update_status ModuleSceneIntro::Update()
 		App->physics->restitution = 0.3f;
 	}
 
-	//App->renderer->Blit(map,0,0,&maprect);
+	App->renderer->Blit(map,0,0,&maprect);
 
 
 	return UPDATE_CONTINUE;
