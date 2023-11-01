@@ -3,6 +3,8 @@
 #include "Globals.h"
 
 #include "SDL/include/SDL.h"
+//#include "SDL2_ttf-2.20.2/include/SDL_ttf.h"
+
 #pragma comment( lib, "SDL/libx86/SDL2.lib" )
 #pragma comment( lib, "SDL/libx86/SDL2main.lib" )
 

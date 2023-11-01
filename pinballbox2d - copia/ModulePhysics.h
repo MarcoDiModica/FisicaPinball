@@ -36,7 +36,7 @@ class ModulePhysics ;
 
 
 // Module --------------------------------------
-class ModulePhysics : public Module, public b2ContactListener // TODO
+class ModulePhysics : public Module, public b2ContactListener 
 {
 public:
 
