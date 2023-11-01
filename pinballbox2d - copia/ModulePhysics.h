@@ -74,13 +74,13 @@ public:
 	SDL_Texture* flipTexture1;
 	SDL_Texture* flipTexture2;
 
-	float restitution = 0.3f;
+	float restitution = 0.4f;
 
 	
 
 private:
 
-	float GRAVITY_Y = -7.0f;
+	float GRAVITY_Y = -2.0f;
 	bool debug;
 	b2World* world;
 	b2MouseJoint* mouse_joint;

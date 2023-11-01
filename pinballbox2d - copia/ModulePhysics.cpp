@@ -307,10 +307,10 @@ update_status ModulePhysics::PostUpdate()
 		return UPDATE_CONTINUE;
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		leftFlipper->body->ApplyForceToCenter(b2Vec2(0, -200), 1);
+		leftFlipper->body->ApplyForceToCenter(b2Vec2(0, -20), 1);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		rightFlipper->body->ApplyForceToCenter(b2Vec2(0, -200), 1);
+		rightFlipper->body->ApplyForceToCenter(b2Vec2(0, -20), 1);
 	}
 
 	// Bonus code: this will iterate all objects in the world and draw the circles
