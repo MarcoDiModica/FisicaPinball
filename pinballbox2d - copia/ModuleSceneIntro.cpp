@@ -235,8 +235,25 @@ update_status ModuleSceneIntro::Update()
 		App->physics->restitution = 0.3f;
 	}
 
-	App->renderer->Blit(map,0,0,&maprect);
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+		App->physics->leftFlipper->body->ApplyForceToCenter(b2Vec2(0, -20), true);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+		App->physics->rightFlipper->body->ApplyForceToCenter(b2Vec2(0, -20), true);
+	}
 
+	App->renderer->Blit(map,0,0,&maprect);
+	
+	/*p2List_item<PhysBody*>* item = circles.getFirst();
+	while (item != NULL)
+	{
+		int posx, posy;
+		item->data->GetPosition(posx, posy);
+		App->renderer->Blit(circle, posx, posy,NULL, 1, item->data->GetRotation());
+
+		item = item->next;
+	}*/
+	
 
 	return UPDATE_CONTINUE;
 }

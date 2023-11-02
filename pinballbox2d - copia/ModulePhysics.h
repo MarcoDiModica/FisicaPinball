@@ -75,6 +75,7 @@ public:
 	PhysBody* rightFlipperAnchor;
 	SDL_Texture* flipTexture1;
 	SDL_Texture* flipTexture2;
+	SDL_Texture* a;
 
 	float restitution = 0.4f;
 
