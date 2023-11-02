@@ -235,6 +235,22 @@ update_status ModuleSceneIntro::Update()
 		App->physics->restitution = 0.3f;
 	}
 
+	/*for (p2List_item<PhysBody*>* item = circles.getFirst(); item != nullptr; item = item->next)
+	{
+		if (item->data->body->GetPosition().y > SCREEN_HEIGHT)
+		{
+			circles.del(item);
+			LOG("DELETED");
+		}
+	}*/
+
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+		App->physics->leftFlipper->body->ApplyForceToCenter(b2Vec2(0, -20), true);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+		App->physics->rightFlipper->body->ApplyForceToCenter(b2Vec2(0, -20), true);
+	}
+
 	App->renderer->Blit(map,0,0,&maprect);
 
 

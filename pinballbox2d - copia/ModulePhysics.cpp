@@ -73,7 +73,7 @@ void ModulePhysics::FlipandoEstoy()
 	leftFlipperJointDef.upperAngle = 30 * DEGTORAD;
 	leftFlipperJointDef.localAnchorA.Set(PIXEL_TO_METERS(-13), 0);
 	leftFlipperJointDef.localAnchorB.Set(0, 0);
-	b2RevoluteJoint* leftFlipperJoint = (b2RevoluteJoint*)App->physics->world->CreateJoint(&leftFlipperJointDef);
+	b2RevoluteJoint* leftFlipperJoint = (b2RevoluteJoint*)world->CreateJoint(&leftFlipperJointDef);
 
 	rightFlipper = CreateRectangle(rightFlipperX, rightFlipperY, flipperWidth, flipperHeight);
 	rightFlipperAnchor = CreateCircle(rightFlipperX, rightFlipperY, 2);
@@ -89,7 +89,7 @@ void ModulePhysics::FlipandoEstoy()
 	rightFlipperJointDef.upperAngle = 30 * DEGTORAD;
 	rightFlipperJointDef.localAnchorA.Set(PIXEL_TO_METERS(13), 0);
 	rightFlipperJointDef.localAnchorB.Set(0, 0);
-	b2RevoluteJoint* rightFlipperJoint = (b2RevoluteJoint*)App->physics->world->CreateJoint(&rightFlipperJointDef);
+	b2RevoluteJoint* rightFlipperJoint = (b2RevoluteJoint*)world->CreateJoint(&rightFlipperJointDef);
 
 	flipTexture1 = App->textures->Load("fliptex.png");
 	flipTexture2 = App->textures->Load("fliptex.png");
