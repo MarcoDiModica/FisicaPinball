@@ -91,8 +91,8 @@ void ModulePhysics::FlipandoEstoy()
 	rightFlipperJointDef.localAnchorB.Set(0, 0);
 	b2RevoluteJoint* rightFlipperJoint = (b2RevoluteJoint*)world->CreateJoint(&rightFlipperJointDef);
 
-	flipTexture1 = App->textures->Load("fliptex.png");
-	flipTexture2 = App->textures->Load("fliptex.png");
+	flipTexture1 = App->textures->Load("pinball/fliptex.png");
+	flipTexture2 = App->textures->Load("pinball/fliptex.png");
 }
 
 PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, float Friction, float Restitution, b2BodyType myType)
@@ -306,12 +306,8 @@ update_status ModulePhysics::PostUpdate()
 	if(!debug)
 		return UPDATE_CONTINUE;
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		leftFlipper->body->ApplyForceToCenter(b2Vec2(0, -20), 1);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		rightFlipper->body->ApplyForceToCenter(b2Vec2(0, -20), 1);
-	}
+	//App->renderer->Blit(flipTexture1, leftFlipperX, leftFlipperY, NULL, 0, leftFlipper->body->GetAngle() * RADTODEG, 0, 10 /*alto de la imagen*/ );
+	//App->renderer->Blit(flipTexture2, rightFlipperX, rightFlipperY, NULL, 0, rightFlipper->body->GetAngle() * RADTODEG, 20/*ancho de la imagen*/ , 10 /*alto de la imagen*/);
 
 	// Bonus code: this will iterate all objects in the world and draw the circles
 	// You need to provide your own macro to translate meters to pixels
