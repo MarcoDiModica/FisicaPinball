@@ -59,6 +59,8 @@ public:
 
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
+
+	//Flippers
 	void FlipandoEstoy();
 
 	int leftFlipperX = 175;
@@ -76,12 +78,20 @@ public:
 
 	float restitution = 0.4f;
 
+	//Cañones
+	void CreateCanon();
+
+	int RightCanonX, RightCanonY;
+	int canonWidth, canonHeight;
+	PhysBody* RightCanon;
+	SDL_Texture* canonTexture;
+	//Falta anim.h
+
 	
 
 private:
 
 	float GRAVITY_Y = -2.0f;
-	bool debug;
 	b2World* world;
 	b2MouseJoint* mouse_joint;
 	b2Body* ground;

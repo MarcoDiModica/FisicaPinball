@@ -17,7 +17,6 @@ ModulePhysics::ModulePhysics(Application* app, bool start_enabled) : Module(app,
 {
 	world = NULL;
 	mouse_joint = NULL;
-	debug = true;
 }
 
 // Destructor
@@ -34,6 +33,7 @@ bool ModulePhysics::Start()
 	world->SetContactListener(this);
 
 	FlipandoEstoy();
+	CreateCanon();
 
 	return true;
 }
@@ -93,6 +93,11 @@ void ModulePhysics::FlipandoEstoy()
 
 	flipTexture1 = App->textures->Load("fliptex.png");
 	flipTexture2 = App->textures->Load("fliptex.png");
+}
+
+void ModulePhysics::CreateCanon()
+{
+	//RightCanon = CreateRectangle(436, 600, 40, 40);
 }
 
 PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, float Friction, float Restitution, b2BodyType myType)
@@ -300,11 +305,11 @@ PhysBody* ModulePhysics::CreateStaticChain(int x, int y, int* points, int size, 
 // 
 update_status ModulePhysics::PostUpdate()
 {
-	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-		debug = !debug;
+	//if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	//	debug = !debug;
 
-	if(!debug)
-		return UPDATE_CONTINUE;
+	//if(!debug)
+	//	return UPDATE_CONTINUE;
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		leftFlipper->body->ApplyForceToCenter(b2Vec2(0, -20), 1);

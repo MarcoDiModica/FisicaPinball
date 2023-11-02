@@ -22,9 +22,12 @@ public:
 	void DebugDraw();
 
 public:
+	microseconds elapsedCycle;
+	microseconds elapsedFrame;
 	int targetFPS = 60;
 	double FPS;
 
+private:
 	bool debug;
 	bool grav;
 	bool capFps;
