@@ -3,9 +3,11 @@
 #include "Application.h"
 #include "ModuleInput.h"
 #include "ModuleRender.h"
+#include "ModulePlayer.h"
 
 #include "ModuleSceneIntro.h"
 #include "ModulePhysics.h"
+#include "p2Point.h"
 #include <string>
 using namespace std;
 
@@ -19,7 +21,7 @@ ModuleDebug::ModuleDebug(Application* app, bool start_enabled) : Module(app, sta
 
 ModuleDebug::~ModuleDebug()
 {
-
+	
 }
 
 bool ModuleDebug::Start() 
@@ -28,6 +30,7 @@ bool ModuleDebug::Start()
 	capFps = false;
 	return true;
 }
+
 
 update_status ModuleDebug::Update()
 {
@@ -47,18 +50,18 @@ update_status ModuleDebug::Update()
 		if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN) grav = !grav;
 
 		if (App->input->GetKey(SDL_SCANCODE_6) == KEY_DOWN) colliders = !colliders;
-		
+
 		if (App->input->GetKey(SDL_SCANCODE_7) == KEY_DOWN) capFps = !capFps;
 
 
 		if (grav == true)
 		{
-			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 			{
 				App->physics->GRAVITY_Y = 3.0f;
 				App->physics->world->SetGravity(b2Vec2(GRAVITY_X, App->physics->GRAVITY_Y));
 			}
-			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
 			{
 				App->physics->GRAVITY_Y = -3.0f;
 				App->physics->world->SetGravity(b2Vec2(GRAVITY_X, App->physics->GRAVITY_Y));
@@ -81,7 +84,38 @@ update_status ModuleDebug::Update()
 		{
 			targetFPS = 60;
 		}
-		
+
+		if (App->physics->mouse_body != nullptr && App->physics->mouse_joint != nullptr)
+		{
+			if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
+			{
+				// Get new mouse position and re-target mouse_joint there
+				b2Vec2 mousePosition;
+				mousePosition.x = PIXEL_TO_METERS(App->input->GetMouseX());
+				mousePosition.y = PIXEL_TO_METERS(App->input->GetMouseY());
+				App->physics->mouse_joint->SetTarget(mousePosition);
+			}
+		}
+		if (App->physics->mouse_body != nullptr && App->physics->mouse_joint != nullptr)
+		{
+			if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP)
+			{
+				// Tell Box2D to destroy the mouse_joint
+				App->physics->world->DestroyJoint(App->physics->mouse_joint);
+
+				App->physics->mouse_joint = nullptr;
+				App->physics->mouse_body = nullptr;
+			}
+		}
+
+	}
+
+	if (App->physics->mouse_body != nullptr && App->physics->mouse_joint != nullptr && !debug)
+	{
+		App->physics->world->DestroyJoint(App->physics->mouse_joint);
+
+		App->physics->mouse_joint = nullptr;
+		App->physics->mouse_body = nullptr;
 	}
 
 	return UPDATE_CONTINUE;
@@ -98,7 +132,7 @@ update_status ModuleDebug::PostUpdate()
 
 void ModuleDebug::DebugDraw()
 {
-	if (colliders)
+	if (colliders==true)
 	{
 		for (b2Body* b = App->physics->world->GetBodyList(); b; b = b->GetNext())
 		{
@@ -167,9 +201,63 @@ void ModuleDebug::DebugDraw()
 				}
 				break;
 				}
-			}
 
-			
+				if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
+				{
+					// test if the current body contains mouse position
+					b2Vec2 p = { PIXEL_TO_METERS(App->input->GetMouseX()), PIXEL_TO_METERS(App->input->GetMouseY()) };
+					if (f->GetShape()->TestPoint(b->GetTransform(), p) == true)
+					{
+						if (App->physics->mouse_joint == nullptr)
+						{
+
+						
+							// If a body was selected we will attach a mouse joint to it
+							// so we can pull it around
+
+							//Create a mouse joint using mouse_joint class property
+
+							// We need to keep this body throughout several game frames; you cannot define it as a local variable here. 
+							App->physics->mouse_body = b;
+
+							// Get current mouse position
+							b2Vec2 mousePosition;
+							mousePosition.x = p.x;
+							mousePosition.y = p.y;
+
+							// Define new mouse joint
+							b2MouseJointDef def;
+							def.bodyA = App->physics->world->CreateBody(&b2BodyDef());; // First body must be a static ground
+							def.bodyB = App->physics->mouse_body; // Second body will be the body to attach to the mouse
+							def.target = mousePosition; // The second body will be pulled towards this location
+							def.dampingRatio = 0.5f; // Play with this value
+							def.frequencyHz = 2.0f; // Play with this value
+							def.maxForce = 200.0f * App->physics->mouse_body->GetMass(); // Play with this value
+
+							// Add the new mouse joint into the World
+							App->physics->mouse_joint = (b2MouseJoint*)App->physics->world->CreateJoint(&def);
+						}
+						else 
+						{
+							b2Vec2 mousePosition;
+							mousePosition.x = p.x;
+							mousePosition.y = p.y;
+							App->physics->mouse_joint->SetTarget(mousePosition);
+						}
+					}
+
+				}
+
+			}
+		}
+
+		if (App->physics->mouse_body != nullptr && App->physics->mouse_joint != nullptr)
+		{
+			if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
+			{
+				// Draw a red line between both anchor points
+				App->renderer->DrawLine(METERS_TO_PIXELS(App->physics->mouse_body->GetPosition().x), METERS_TO_PIXELS(App->physics->mouse_body->GetPosition().y), App->input->GetMouseX(), App->input->GetMouseY(), 255, 0, 0);
+			}
 		}
 	}
 

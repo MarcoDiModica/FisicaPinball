@@ -233,6 +233,13 @@ update_status ModuleSceneIntro::Update()
 			circles.getLast()->data->listener = this;
 			nBalls++;
 		}
+
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && nBalls == 0)
+		{
+			circles.add(App->physics->CreateCircle(410, 580, 10));
+			circles.getLast()->data->listener = this;
+			nBalls++;
+		}
 	}
 
 	if (App->debug->debug)

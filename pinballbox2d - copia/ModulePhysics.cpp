@@ -6,6 +6,7 @@
 #include "p2Point.h"
 #include "math.h"
 #include "ModuleTextures.h"
+#include "ModuleDebug.h"
 
 #ifdef _DEBUG
 #pragma comment( lib, "Box2D/libx86/Debug/Box2D.lib" )
@@ -15,8 +16,10 @@
 
 ModulePhysics::ModulePhysics(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
+	ground = NULL;
 	world = NULL;
 	mouse_joint = NULL;
+	mouse_body = NULL;
 }
 
 // Destructor
@@ -97,7 +100,31 @@ void ModulePhysics::FlipandoEstoy()
 
 void ModulePhysics::CreateCanon()
 {
-	//RightCanon = CreateRectangle(436, 600, 40, 40);
+	RightCanonX = 400;
+	RightCanonY = 680;
+	canonWidth = 20;
+	canonHeight = 20;
+	RightCanon = CreateRectangle(RightCanonX, RightCanonY, canonWidth, canonHeight);
+
+	// Create the canon anchor (a static body)
+	int anchorX = RightCanonX + canonWidth / 2; // Adjust the anchor position
+	int anchorY = RightCanonY - 5; // Slightly above the canon
+	PhysBody* canonAnchor = CreateCircle(anchorX, anchorY, 2);
+	canonAnchor->body->SetType(b2_staticBody);
+
+	// Define the canon joint
+	b2RevoluteJointDef canonJointDef;
+	canonJointDef.bodyA = RightCanon->body;
+	canonJointDef.bodyB = canonAnchor->body;
+	canonJointDef.referenceAngle = 0;
+	canonJointDef.enableLimit = true;
+	canonJointDef.lowerAngle = 0 * DEGTORAD; // Adjust the angles as needed
+	canonJointDef.upperAngle = 0 * DEGTORAD;
+	canonJointDef.localAnchorA.Set(0, 0);
+	canonJointDef.localAnchorB.Set(0, 0);
+
+	// Create the canon joint
+	b2RevoluteJoint* canonJoint = (b2RevoluteJoint*)world->CreateJoint(&canonJointDef);
 }
 
 PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, float Friction, float Restitution, b2BodyType myType)
@@ -305,6 +332,9 @@ PhysBody* ModulePhysics::CreateStaticChain(int x, int y, int* points, int size, 
 // 
 update_status ModulePhysics::PostUpdate()
 {
+	//if (App->debug->debug) Esto hay que activarlo cuando acabemos
+	 
+	
 	//if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	//	debug = !debug;
 
@@ -383,6 +413,8 @@ update_status ModulePhysics::PostUpdate()
 				}
 				break;
 			}
+
+
 
 			// TODO 1: If mouse button 1 is pressed ...
 			// App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN
@@ -488,4 +520,19 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 
 	if(physB && physB->listener != NULL)
 		physB->listener->OnCollision(physB, physA);
+
+	if (physA != nullptr && physB != nullptr)
+	{
+		float impulseStrength = 5.0f;
+		b2Vec2 upwardImpulse(0, impulseStrength);
+
+		if (physA == RightCanon && physB->body->GetType() == b2_dynamicBody)
+		{
+			physB->body->ApplyLinearImpulse(upwardImpulse, physA->body->GetWorldCenter(), true);
+		}
+		if (physB == RightCanon && physA->body->GetType() == b2_dynamicBody)
+		{
+			physA->body->ApplyLinearImpulse(upwardImpulse, physA->body->GetWorldCenter(), true);
+		}
+	}
 }

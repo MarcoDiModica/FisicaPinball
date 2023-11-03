@@ -2,6 +2,7 @@
 #define __DEBUG_H__
 
 #include "Module.h"
+#include "p2Point.h"
 #include <chrono>
 
 using namespace std::chrono;
@@ -20,6 +21,7 @@ public:
 	update_status PostUpdate();
 
 	void DebugDraw();
+
 
 public:
 	microseconds elapsedCycle;

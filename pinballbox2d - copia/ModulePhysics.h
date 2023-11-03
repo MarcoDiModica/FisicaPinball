@@ -84,9 +84,14 @@ public:
 
 	int RightCanonX, RightCanonY;
 	int canonWidth, canonHeight;
+	b2Vec2 canonCenter = b2Vec2(RightCanonX + canonWidth / 2, RightCanonY + 10);
+
 	PhysBody* RightCanon;
+	PhysBody* RightCanonAnchor;
 	SDL_Texture* canonTexture;
 	//Falta anim.h
+
+	//Ball
 
 	
 
@@ -95,6 +100,7 @@ private:
 	float GRAVITY_Y = -2.0f;
 	b2World* world;
 	b2MouseJoint* mouse_joint;
+	b2Body* mouse_body;
 	b2Body* ground;
 
 	friend class ModuleDebug;
