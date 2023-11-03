@@ -188,8 +188,8 @@ bool ModuleSceneIntro::Start()
 	App->physics->CreateStaticChain(0, 0, LeftPolyBumper, 16, 0.7f, 0.2f);
 	App->physics->CreateStaticChain(0, 0, RightPolyBumper, 12, 0.7f, 0.2f);
 
-	PhysBody* EggHead1 =  App->physics->CreateStaticCircle(234, 360, 25, 0.2f);
-	PhysBody* EggHead2 = App->physics->CreateStaticCircle(71, 432, 25, 0.2f);
+	PhysBody* EggHead1 =  App->physics->CreateStaticCircle(234, 360, 22, 0.2f);
+	PhysBody* EggHead2 = App->physics->CreateStaticCircle(71, 432, 22, 0.2f);
 
 	bumper1 = new Bumper(309, 335, *App->physics);
 	bumper2 = new Bumper(370,356, *App->physics);
