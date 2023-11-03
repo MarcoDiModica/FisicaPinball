@@ -62,6 +62,9 @@ public:
 	Bumper* bumper2;
 	Bumper* bumper3;
 
+	int font;
+	int nBalls;
+
 };
 
 #endif // __MODULESCENEINTRO_H__

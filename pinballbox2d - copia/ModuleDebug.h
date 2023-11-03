@@ -26,9 +26,9 @@ public:
 	microseconds elapsedFrame;
 	int targetFPS = 60;
 	double FPS;
+	bool debug;
 
 private:
-	bool debug;
 	bool grav;
 	bool capFps;
 	bool colliders;

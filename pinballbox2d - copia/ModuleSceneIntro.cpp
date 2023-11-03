@@ -6,10 +6,13 @@
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
+#include "ModuleFonts.h"
+#include "ModuleDebug.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	circle = box = rick = NULL;
+	nBalls = 0;
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
@@ -29,6 +32,7 @@ bool ModuleSceneIntro::Start()
 	//box = App->textures->Load("pinball/crate.png");
 	//rick = App->textures->Load("pinball/rick_head.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
+	//font = App->fonts->Load();
 
 	
 	int mapa_de_sonic[90] = {
@@ -213,33 +217,45 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
-	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN && nBalls == 0)
 	{
 		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 10));
 		circles.getLast()->data->listener = this;
+		nBalls++;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-	{
-		ball = App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 10);
-	}
 
-	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+	if (App->debug->debug)
 	{
-		ball->body->GetFixtureList()->SetRestitution(0.7f);
-		App->physics->restitution = 0.7f;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
-	{
-		ball->body->GetFixtureList()->SetRestitution(0.3f);
-		App->physics->restitution = 0.3f;
-	}
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		App->physics->leftFlipper->body->ApplyForceToCenter(b2Vec2(0, -20), true);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		App->physics->rightFlipper->body->ApplyForceToCenter(b2Vec2(0, -20), true);
+		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		{
+			circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 10));
+			circles.getLast()->data->listener = this;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+		{
+			ball = App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 10);
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+		{
+			ball->body->GetFixtureList()->SetRestitution(0.7f);
+			App->physics->restitution = 0.7f;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+		{
+			ball->body->GetFixtureList()->SetRestitution(0.3f);
+			App->physics->restitution = 0.3f;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			App->physics->leftFlipper->body->ApplyForceToCenter(b2Vec2(0, -20), true);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			App->physics->rightFlipper->body->ApplyForceToCenter(b2Vec2(0, -20), true);
+		}
 	}
 
 	App->renderer->Blit(map,0,0,&maprect);
