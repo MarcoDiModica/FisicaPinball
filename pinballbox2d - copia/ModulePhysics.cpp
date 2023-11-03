@@ -17,7 +17,6 @@ ModulePhysics::ModulePhysics(Application* app, bool start_enabled) : Module(app,
 {
 	world = NULL;
 	mouse_joint = NULL;
-	debug = true;
 }
 
 // Destructor
@@ -34,6 +33,7 @@ bool ModulePhysics::Start()
 	world->SetContactListener(this);
 
 	FlipandoEstoy();
+	CreateCanon();
 
 	return true;
 }
@@ -73,7 +73,7 @@ void ModulePhysics::FlipandoEstoy()
 	leftFlipperJointDef.upperAngle = 30 * DEGTORAD;
 	leftFlipperJointDef.localAnchorA.Set(PIXEL_TO_METERS(-13), 0);
 	leftFlipperJointDef.localAnchorB.Set(0, 0);
-	b2RevoluteJoint* leftFlipperJoint = (b2RevoluteJoint*)App->physics->world->CreateJoint(&leftFlipperJointDef);
+	b2RevoluteJoint* leftFlipperJoint = (b2RevoluteJoint*)world->CreateJoint(&leftFlipperJointDef);
 
 	rightFlipper = CreateRectangle(rightFlipperX, rightFlipperY, flipperWidth, flipperHeight);
 	rightFlipperAnchor = CreateCircle(rightFlipperX, rightFlipperY, 2);
@@ -89,10 +89,15 @@ void ModulePhysics::FlipandoEstoy()
 	rightFlipperJointDef.upperAngle = 30 * DEGTORAD;
 	rightFlipperJointDef.localAnchorA.Set(PIXEL_TO_METERS(13), 0);
 	rightFlipperJointDef.localAnchorB.Set(0, 0);
-	b2RevoluteJoint* rightFlipperJoint = (b2RevoluteJoint*)App->physics->world->CreateJoint(&rightFlipperJointDef);
+	b2RevoluteJoint* rightFlipperJoint = (b2RevoluteJoint*)world->CreateJoint(&rightFlipperJointDef);
 
-	flipTexture1 = App->textures->Load("fliptex.png");
-	flipTexture2 = App->textures->Load("fliptex.png");
+	flipTexture1 = App->textures->Load("pinball/fliptex.png");
+	flipTexture2 = App->textures->Load("pinball/fliptex.png");
+}
+
+void ModulePhysics::CreateCanon()
+{
+	//RightCanon = CreateRectangle(436, 600, 40, 40);
 }
 
 PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, float Friction, float Restitution, b2BodyType myType)
@@ -300,18 +305,14 @@ PhysBody* ModulePhysics::CreateStaticChain(int x, int y, int* points, int size, 
 // 
 update_status ModulePhysics::PostUpdate()
 {
-	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-		debug = !debug;
+	//if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	//	debug = !debug;
 
-	if(!debug)
-		return UPDATE_CONTINUE;
+	//if(!debug)
+	//	return UPDATE_CONTINUE;
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		leftFlipper->body->ApplyForceToCenter(b2Vec2(0, -200), 1);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		rightFlipper->body->ApplyForceToCenter(b2Vec2(0, -200), 1);
-	}
+	//App->renderer->Blit(flipTexture1, leftFlipperX, leftFlipperY, NULL, 0, leftFlipper->body->GetAngle() * RADTODEG, 0, 10 /*alto de la imagen*/ );
+	//App->renderer->Blit(flipTexture2, rightFlipperX, rightFlipperY, NULL, 0, rightFlipper->body->GetAngle() * RADTODEG, 20/*ancho de la imagen*/ , 10 /*alto de la imagen*/);
 
 	// Bonus code: this will iterate all objects in the world and draw the circles
 	// You need to provide your own macro to translate meters to pixels

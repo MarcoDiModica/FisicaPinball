@@ -59,6 +59,8 @@ public:
 
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
+
+	//Flippers
 	void FlipandoEstoy();
 
 	int leftFlipperX = 175;
@@ -73,15 +75,24 @@ public:
 	PhysBody* rightFlipperAnchor;
 	SDL_Texture* flipTexture1;
 	SDL_Texture* flipTexture2;
+	SDL_Texture* a;
 
-	float restitution = 0.3f;
+	float restitution = 0.4f;
+
+	//Cañones
+	void CreateCanon();
+
+	int RightCanonX, RightCanonY;
+	int canonWidth, canonHeight;
+	PhysBody* RightCanon;
+	SDL_Texture* canonTexture;
+	//Falta anim.h
 
 	
 
 private:
 
-	float GRAVITY_Y = -7.0f;
-	bool debug;
+	float GRAVITY_Y = -2.0f;
 	b2World* world;
 	b2MouseJoint* mouse_joint;
 	b2Body* ground;

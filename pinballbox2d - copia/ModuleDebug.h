@@ -22,10 +22,13 @@ public:
 	void DebugDraw();
 
 public:
+	microseconds elapsedCycle;
+	microseconds elapsedFrame;
 	int targetFPS = 60;
 	double FPS;
-
 	bool debug;
+
+private:
 	bool grav;
 	bool capFps;
 	bool colliders;
