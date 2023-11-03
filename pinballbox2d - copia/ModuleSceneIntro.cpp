@@ -217,17 +217,27 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN && nBalls == 0)
-	{
-		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 10));
-		circles.getLast()->data->listener = this;
-		nBalls++;
+
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+		App->physics->leftFlipper->body->ApplyForceToCenter(b2Vec2(0, -20), true);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+		App->physics->rightFlipper->body->ApplyForceToCenter(b2Vec2(0, -20), true);
 	}
 
+	if (!App->debug->debug)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN && nBalls == 0)
+		{
+			circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 10));
+			circles.getLast()->data->listener = this;
+			nBalls++;
+		}
+	}
 
 	if (App->debug->debug)
 	{
-
+		nBalls = 0;
 		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 		{
 			circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 10));
@@ -250,12 +260,6 @@ update_status ModuleSceneIntro::Update()
 			App->physics->restitution = 0.3f;
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-			App->physics->leftFlipper->body->ApplyForceToCenter(b2Vec2(0, -20), true);
-		}
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			App->physics->rightFlipper->body->ApplyForceToCenter(b2Vec2(0, -20), true);
-		}
 	}
 
 	App->renderer->Blit(map,0,0,&maprect);

@@ -36,6 +36,11 @@ update_status ModuleDebug::Update()
 		debug = true;
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	{
+		debug = false;
+	}
+
 	if (debug)
 	{
 
