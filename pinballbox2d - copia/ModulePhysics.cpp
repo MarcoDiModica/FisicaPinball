@@ -355,27 +355,30 @@ PhysBody* ModulePhysics::CreateStaticChain(int x, int y, int* points, int size, 
 // 
 update_status ModulePhysics::PostUpdate()
 {
-	//if (App->debug->debug) Esto hay que activarlo cuando acabemos
-	 
-	
-	//if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-	//	debug = !debug;
-
-	//if(!debug)
-	//	return UPDATE_CONTINUE;
-
-	App->renderer->Blit(flipTexture1, leftFlipperX - 7, leftFlipperY - 7, NULL, 0, leftFlipper->body->GetAngle() * RADTODEG, 5, 8 /*alto de la imagen*/ );
-	App->renderer->Blit(flipTexture2, rightFlipperX - 36, rightFlipperY - 10, NULL, 0, rightFlipper->body->GetAngle() * RADTODEG, 36/*ancho de la imagen*/ , 8 /*alto de la imagen*/);
-
-	// Bonus code: this will iterate all objects in the world and draw the circles
-	// You need to provide your own macro to translate meters to pixels
-	for(b2Body* b = world->GetBodyList(); b; b = b->GetNext())
+	if (App->debug->debug)
 	{
-		for(b2Fixture* f = b->GetFixtureList(); f; f = f->GetNext())
+
+
+
+
+		//if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		//	debug = !debug;
+
+		//if(!debug)
+		//	return UPDATE_CONTINUE;
+
+		App->renderer->Blit(flipTexture1, leftFlipperX - 7, leftFlipperY - 7, NULL, 0, leftFlipper->body->GetAngle() * RADTODEG, 5, 8 /*alto de la imagen*/);
+		App->renderer->Blit(flipTexture2, rightFlipperX - 36, rightFlipperY - 10, NULL, 0, rightFlipper->body->GetAngle() * RADTODEG, 36/*ancho de la imagen*/, 8 /*alto de la imagen*/);
+
+		// Bonus code: this will iterate all objects in the world and draw the circles
+		// You need to provide your own macro to translate meters to pixels
+		for (b2Body* b = world->GetBodyList(); b; b = b->GetNext())
 		{
-			switch(f->GetType())
+			for (b2Fixture* f = b->GetFixtureList(); f; f = f->GetNext())
 			{
-				// Draw circles ------------------------------------------------
+				switch (f->GetType())
+				{
+					// Draw circles ------------------------------------------------
 				case b2Shape::e_circle:
 				{
 					b2CircleShape* shape = (b2CircleShape*)f->GetShape();
@@ -391,10 +394,10 @@ update_status ModulePhysics::PostUpdate()
 					int32 count = polygonShape->GetVertexCount();
 					b2Vec2 prev, v;
 
-					for(int32 i = 0; i < count; ++i)
+					for (int32 i = 0; i < count; ++i)
 					{
 						v = b->GetWorldPoint(polygonShape->GetVertex(i));
-						if(i > 0)
+						if (i > 0)
 							App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 255, 100, 100);
 
 						prev = v;
@@ -411,10 +414,10 @@ update_status ModulePhysics::PostUpdate()
 					b2ChainShape* shape = (b2ChainShape*)f->GetShape();
 					b2Vec2 prev, v;
 
-					for(int32 i = 0; i < shape->m_count; ++i)
+					for (int32 i = 0; i < shape->m_count; ++i)
 					{
 						v = b->GetWorldPoint(shape->m_vertices[i]);
-						if(i > 0)
+						if (i > 0)
 							App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 100, 255, 100);
 						prev = v;
 					}
@@ -435,13 +438,15 @@ update_status ModulePhysics::PostUpdate()
 					App->renderer->DrawLine(METERS_TO_PIXELS(v1.x), METERS_TO_PIXELS(v1.y), METERS_TO_PIXELS(v2.x), METERS_TO_PIXELS(v2.y), 100, 100, 255);
 				}
 				break;
+				}
+
+
+
+				// TODO 1: If mouse button 1 is pressed ...
+				// App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN
+				// test if the current body contains mouse position
 			}
 
-
-
-			// TODO 1: If mouse button 1 is pressed ...
-			// App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN
-			// test if the current body contains mouse position
 		}
 	}
 
