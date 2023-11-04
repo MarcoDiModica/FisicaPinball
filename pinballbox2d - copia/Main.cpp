@@ -30,6 +30,8 @@ int main(int argc, char ** argv)
 
 	int main_return = EXIT_FAILURE;
 	main_states state = MAIN_CREATION;
+	const double targetFPS = 60.0;  // Desired frame rate
+	const double timeStep = 1.0 / targetFPS;
 	
 
 	while (state != MAIN_EXIT)

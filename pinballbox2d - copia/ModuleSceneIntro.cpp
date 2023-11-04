@@ -260,10 +260,11 @@ update_status ModuleSceneIntro::Update()
 
 	if (!App->debug->debug)
 	{
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && availableBalls != 0)
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && availableBalls > 0)
 		{
 			circles.add(App->physics->CreateCircle(410, 580, 10));
 			circles.getLast()->data->listener = this;
+			availableBalls--;
 		}
 	}
 
