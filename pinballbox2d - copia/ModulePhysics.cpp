@@ -125,6 +125,28 @@ void ModulePhysics::CreateCanon()
 
 	// Create the canon joint
 	b2RevoluteJoint* canonJoint = (b2RevoluteJoint*)world->CreateJoint(&canonJointDef);
+
+	/*UpCanonX = 245;
+	UpCanonY = 437;
+	UpCanon = CreateRectangle(UpCanonX, UpCanonY, canonWidth, canonHeight);
+
+	int UpanchorX = UpCanonX + canonWidth / 2;
+	int UpanchorY = UpCanonY - 5;
+	PhysBody* UpcanonAnchor = CreateCircle(UpanchorX, UpanchorY, 2);
+	UpcanonAnchor->body->SetType(b2_staticBody);
+
+	b2RevoluteJointDef UpcanonJointDef;
+	UpcanonJointDef.bodyA = UpCanon->body;
+	UpcanonJointDef.bodyB = UpcanonAnchor->body;
+	UpcanonJointDef.referenceAngle = 0;
+	UpcanonJointDef.enableLimit = true;
+	UpcanonJointDef.lowerAngle = 45 * DEGTORAD;
+	UpcanonJointDef.upperAngle = 45 * DEGTORAD;
+	UpcanonJointDef.localAnchorA.Set(0, 0);
+	UpcanonJointDef.localAnchorB.Set(0, 0);
+
+	b2RevoluteJoint* UpcanonJoint = (b2RevoluteJoint*)world->CreateJoint(&UpcanonJointDef);*/
+		
 }
 
 PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, float Friction, float Restitution, b2BodyType myType)
@@ -524,16 +546,32 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 
 	if (physA != nullptr && physB != nullptr)
 	{
-		float impulseStrength = 5.0f;
-		b2Vec2 upwardImpulse(0, impulseStrength);
+		float impulseStrength = 2.0f;
 
+		// Calculate the angle of collision
+		b2Vec2 collisionNormal = contact->GetManifold()->localNormal;
+		float collisionAngle = atan2(collisionNormal.y, collisionNormal.x);
+
+		b2Vec2 collisionImpulse(cos(collisionAngle) * impulseStrength, sin(collisionAngle) * impulseStrength);
+
+		// Apply the impulse to the dynamic bodies involved in the collision
 		if (physA == RightCanon && physB->body->GetType() == b2_dynamicBody)
 		{
-			physB->body->ApplyLinearImpulse(upwardImpulse, physA->body->GetWorldCenter(), true);
+			physB->body->ApplyLinearImpulse(collisionImpulse, physA->body->GetWorldCenter(), true);
 		}
 		if (physB == RightCanon && physA->body->GetType() == b2_dynamicBody)
 		{
-			physA->body->ApplyLinearImpulse(upwardImpulse, physA->body->GetWorldCenter(), true);
+			physA->body->ApplyLinearImpulse(collisionImpulse, physB->body->GetWorldCenter(), true);
 		}
+
+		if (physA == UpCanon && physB->body->GetType() == b2_dynamicBody)
+		{
+			physB->body->ApplyLinearImpulse(collisionImpulse, physA->body->GetWorldCenter(), true);
+		}
+		if (physB == UpCanon && physA->body->GetType() == b2_dynamicBody)
+		{
+			physA->body->ApplyLinearImpulse(collisionImpulse, physB->body->GetWorldCenter(), true);
+		}
+
 	}
 }
