@@ -12,7 +12,7 @@ struct PhysBody;
 struct PhysMotor;
 
 class Bumper {
-
+public:
 	PhysBody* pBody = nullptr;
 
 public:

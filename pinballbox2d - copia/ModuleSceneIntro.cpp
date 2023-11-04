@@ -8,6 +8,7 @@
 #include "ModulePhysics.h"
 #include "ModuleFonts.h"
 #include "ModuleDebug.h"
+#include "ModulePlayer.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -189,15 +190,16 @@ bool ModuleSceneIntro::Start()
 	App->physics->CreateStaticChain(0, 0, RightFlipperWall, 16);
 	
 	// --- polygon bumpers---//
-	App->physics->CreateStaticChain(0, 0, LeftPolyBumper, 16, 0.7f, 0.2f);
-	App->physics->CreateStaticChain(0, 0, RightPolyBumper, 12, 0.7f, 0.2f);
+	PhysBody* leftBumper = App->physics->CreateStaticChain(0, 0, LeftPolyBumper, 16, 0.7f, 0.2f);
+	PhysBody* rightBumper = App->physics->CreateStaticChain(0, 0, RightPolyBumper, 12, 0.7f, 0.2f);
+	leftBumper->points = 3; rightBumper->points = 3;
 
 	PhysBody* EggHead1 =  App->physics->CreateStaticCircle(234, 360, 22, 0.2f);
 	PhysBody* EggHead2 = App->physics->CreateStaticCircle(71, 432, 22, 0.2f);
 
-	bumper1 = new Bumper(309, 335, *App->physics);
-	bumper2 = new Bumper(370,356, *App->physics);
-	bumper2 = new Bumper(309, 389, *App->physics);
+	bumper1 = new Bumper(309, 335, *App->physics); bumper1->pBody->points = 4;
+	bumper2 = new Bumper(370,356, *App->physics); bumper2->pBody->points = 4;
+	bumper3 = new Bumper(309, 389, *App->physics); bumper3->pBody->points = 4;
 	
 
 
@@ -289,5 +291,6 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	int x, y;
 
+	App->player->score += bodyB->points;
 	App->audio->PlayFx(bonus_fx);
 }

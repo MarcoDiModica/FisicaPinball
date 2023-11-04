@@ -29,6 +29,7 @@ public:
 	int width, height;
 	b2Body* body;
 	Module* listener;
+	int points = 1;
 };
 
 class ModulePhysics ;

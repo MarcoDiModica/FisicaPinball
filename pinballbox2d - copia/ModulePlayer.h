@@ -13,6 +13,11 @@ public:
 	update_status Update();
 	bool CleanUp();
 
+
+	int font = 20;
+	char scoreText[10] = { "\0" };
+	int score = 0;
+
 public:
 
 };
