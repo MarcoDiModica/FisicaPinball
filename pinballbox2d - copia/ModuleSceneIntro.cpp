@@ -329,6 +329,7 @@ update_status ModuleSceneIntro::Update()
 
 			if (availableBalls == 0) {
 				App->player->Loose();
+				Reload();
 				availableBalls = 3;
 				LOG("You've lost");
 			}
@@ -397,9 +398,25 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		int i = 0;
 		App->player->score += 777;
 		bodyB->Active = false;
+		App->player->collectedEsmeralds++;
 	
+		if (App->player->collectedEsmeralds > 6) {
 
+		}
 		
 
 	}
+}
+
+void ModuleSceneIntro::Reload() {
+
+	for (int i = 0; i < 7; ++i) {
+
+		Esmeralds[i]->pBody->Active = true;
+		ActiveEsmeralds = 0;
+
+		circle = App->textures->Load("");
+		
+	}
+
 }

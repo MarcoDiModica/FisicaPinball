@@ -42,6 +42,7 @@ public:
 	bool CleanUp();
 
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
+	void Reload();
 
 	ChaosEsmerald* Esmeralds[7];
 	b2Vec2 esmeraldsPositions[7];

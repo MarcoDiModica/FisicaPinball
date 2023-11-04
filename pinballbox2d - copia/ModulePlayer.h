@@ -23,6 +23,8 @@ public:
 	int maxScore = 0;
 	int prevScore = 0;
 
+	int collectedEsmeralds = 0;
+
 public:
 
 };
