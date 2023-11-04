@@ -47,6 +47,7 @@ public:
 	ChaosEsmerald* Esmeralds[7];
 	b2Vec2 esmeraldsPositions[7];
 	SDL_Texture* EsmeraldTexture;
+	SDL_Texture* boost_texture;
 
 	Timer EsmeraldSpawnTimer;
 	uint ActiveEsmeralds;
@@ -78,6 +79,8 @@ public:
 	Bumper* bumper5;
 	Bumper* bumper6;
 	Bumper* bumper7;
+
+	BoostPad* BoostPad1;
 
 	p2List_item<PhysBody*>* item = circles.getFirst();
 

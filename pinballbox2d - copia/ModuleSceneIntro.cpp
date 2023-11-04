@@ -9,6 +9,7 @@
 #include "ModuleFonts.h"
 #include "ModuleDebug.h"
 #include "ModulePlayer.h"
+#include "Boost.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -36,7 +37,7 @@ bool ModuleSceneIntro::Start()
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	//font = App->fonts->Load();
 	App->audio->PlayMusic("pinball/musik.mp3"); // MARCO CAMBIA EL FORMATO DEL ARCHIVO QUE SI NO, NO VA	
-
+	boost_texture = App->textures->Load("pinball/boostpad.png");
 	
 	
 	int mapa_de_sonic[90] = {
@@ -260,6 +261,17 @@ bool ModuleSceneIntro::Start()
 	PhysBody* coin2 = App->physics->CreateCoin(128, 228, 8);
 	PhysBody* coin3 = App->physics->CreateCoin(128, 278, 8);
 	PhysBody* coin4 = App->physics->CreateCoin(148, 338, 8);
+	int boostPadcoords[8] = {
+	118, 320,
+	150, 370,
+	179, 350,
+	146, 301
+	};
+
+	BoostPad1 = App->physics->CreateBoostPad(0, 0, boostPadcoords, 8, App->physics);
+	BoostPad1->texture = boost_texture;
+
+	
 
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 	EsmeraldSpawnTimer.Start();
@@ -337,6 +349,15 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(App->physics->flipTexture1 , App->physics->leftFlipperX - 7, App->physics->leftFlipperY - 7, NULL, 0, App->physics->leftFlipper->body->GetAngle() * RADTODEG, 5, 8 /*alto de la imagen*/);
 	App->renderer->Blit(App->physics->flipTexture2, App->physics->rightFlipperX - 36, App->physics->rightFlipperY - 10, NULL, 0, App->physics->rightFlipper->body->GetAngle() * RADTODEG, 36/*ancho de la imagen*/, 8 /*alto de la imagen*/);
 
+	BoostPad1->Update();
+	if (BoostPad1->pBody->Active == true) {
+		SDL_Rect r = { 0,0,72,41 };
+		App->renderer->Blit(boost_texture, 110, 316, &r, 1.0f, 60);
+	}
+	else {
+		SDL_Rect r = { 72,0,72,41 };
+		App->renderer->Blit(boost_texture, 110, 316, &r, 1.0f, 60);
+	}
 
 	p2List_item<PhysBody*>* item = circles.getFirst();
 	p2List_item<PhysBody*>* next_item;
@@ -369,6 +390,7 @@ update_status ModuleSceneIntro::Update()
 		item = next_item; 
 	}
 
+	//----Spawn Chaos Esmeral every 10 seconds---------//
 	if (EsmeraldSpawnTimer.ReadSec() > 10) {
 
 		if (ActiveEsmeralds < 7) {
@@ -379,7 +401,7 @@ update_status ModuleSceneIntro::Update()
 
 	}
 
-
+	// ----------Draw Active esmeralds-----------//
 	for (int i = 0; i < 7; ++i) {
 		if (Esmeralds[i]->pBody->Active == true) {
 
@@ -417,7 +439,12 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	}
 
 
+	if (bodyB->cType == ColliderType::Boost && bodyB->Active == true) {
 
+		bodyA->body->ApplyForce(b2Vec2(-20, -100), b2Vec2(0, 0), true);
+
+
+	}
 
 
 

@@ -72,6 +72,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Boost.h" />
     <ClInclude Include="ModuleDebug.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="ModuleFonts.h" />
@@ -91,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Boost.cpp" />
     <ClCompile Include="ModuleDebug.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="Main.cpp" />

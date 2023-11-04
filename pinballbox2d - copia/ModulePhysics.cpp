@@ -8,6 +8,7 @@
 #include "ModuleTextures.h"
 #include "ModuleDebug.h"
 #include "ModuleSceneIntro.h"
+#include "Boost.h"
 
 #ifdef _DEBUG
 #pragma comment( lib, "Box2D/libx86/Debug/Box2D.lib" )
@@ -364,6 +365,47 @@ PhysBody* ModulePhysics::CreateStaticChain(int x, int y, int* points, int size, 
 	pbody->width = pbody->height = 0;
 
 	return pbody;
+}
+
+BoostPad* ModulePhysics::CreateBoostPad(int x, int y,int* points, int size, ModulePhysics* Physics, int waitTime) {
+
+	
+	b2BodyDef body;
+	body.type = b2_staticBody;
+	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+
+	b2Body* b = world->CreateBody(&body);
+
+	b2ChainShape shape;
+	b2Vec2* p = new b2Vec2[size / 2];
+
+	for (uint i = 0; i < size / 2; ++i)
+	{
+		p[i].x = PIXEL_TO_METERS(points[i * 2 + 0]);
+		p[i].y = PIXEL_TO_METERS(points[i * 2 + 1]);
+	}
+
+	shape.CreateLoop(p, size / 2);
+
+	b2FixtureDef fixture;
+
+	fixture.isSensor = true;
+	fixture.shape = &shape;
+
+	b->CreateFixture(&fixture);
+
+	delete p;
+
+	PhysBody* pbody = new PhysBody();
+	pbody->body = b;
+	b->SetUserData(pbody);
+	pbody->width = pbody->height = 0;
+	pbody->cType = ColliderType::Boost;
+
+	BoostPad* boost = new BoostPad(pbody);
+	
+	boost->waitTime = waitTime;
+	return boost;
 }
 // 
 update_status ModulePhysics::PostUpdate()

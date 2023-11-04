@@ -5,6 +5,7 @@
 #include "Box2D/Box2D/Box2D.h"
 #include "ModulePhysics.h"
 #include <cmath>
+#include "Boost.h"
 
 #define GRAVITY_X 0.0f
 //#define GRAVITY_Y -5.0f
@@ -20,6 +21,7 @@
 
 enum ColliderType {
 	Esmeralds,
+	Boost,
 	notEsmeralds
 };
 
@@ -44,6 +46,37 @@ public:
 };
 
 class ModulePhysics ;
+
+class BoostPad {
+public:
+	PhysBody* pBody = nullptr;
+
+	Timer DownTime;
+	Timer ActiveTime;
+
+	int waitTime;
+
+	SDL_Texture* texture = nullptr;
+
+	BoostPad(PhysBody* mybod) {
+		pBody = mybod;
+		pBody->Active = false;
+	}
+	void Update() {
+
+		if (pBody->Active == false && DownTime.ReadSec() > waitTime) {
+
+			pBody->Active = true;
+			ActiveTime.Start();
+		}
+
+		else if (pBody->Active == true && ActiveTime.ReadSec() > waitTime) {
+
+			pBody->Active = false;
+			DownTime.Start();
+		}
+	}
+};
 
 class ChaosEsmerald {
 
@@ -119,6 +152,7 @@ public:
 	PhysBody* CreateChain(int x, int y, int* points, int size);
 	PhysBody* ModulePhysics::CreateStaticChain(int x, int y, int* points, int size, float Restitution = 0, float Friction = 0.2f);
 	ChaosEsmerald* ModulePhysics::CreateChaosEsmerald(int x, int y, ModulePhysics* Physics);
+	BoostPad* ModulePhysics::CreateBoostPad(int x, int y, int* points, int size, ModulePhysics* Physics, int waitTime = 2);
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
 
