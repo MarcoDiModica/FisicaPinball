@@ -367,8 +367,8 @@ update_status ModulePhysics::PostUpdate()
 		//if(!debug)
 		//	return UPDATE_CONTINUE;
 
-		App->renderer->Blit(flipTexture1, leftFlipperX - 7, leftFlipperY - 7, NULL, 0, leftFlipper->body->GetAngle() * RADTODEG, 5, 8 /*alto de la imagen*/);
-		App->renderer->Blit(flipTexture2, rightFlipperX - 36, rightFlipperY - 10, NULL, 0, rightFlipper->body->GetAngle() * RADTODEG, 36/*ancho de la imagen*/, 8 /*alto de la imagen*/);
+		//App->renderer->Blit(flipTexture1, leftFlipperX - 7, leftFlipperY - 7, NULL, 0, leftFlipper->body->GetAngle() * RADTODEG, 5, 8 /*alto de la imagen*/);
+		//App->renderer->Blit(flipTexture2, rightFlipperX - 36, rightFlipperY - 10, NULL, 0, rightFlipper->body->GetAngle() * RADTODEG, 36/*ancho de la imagen*/, 8 /*alto de la imagen*/);
 
 		// Bonus code: this will iterate all objects in the world and draw the circles
 		// You need to provide your own macro to translate meters to pixels
