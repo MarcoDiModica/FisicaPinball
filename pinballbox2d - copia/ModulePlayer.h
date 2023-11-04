@@ -24,6 +24,8 @@ public:
 	int prevScore = 0;
 
 	int collectedEsmeralds = 0;
+	bool isSuper = false;
+	float pMultiplier = 1.0f;
 
 public:
 
