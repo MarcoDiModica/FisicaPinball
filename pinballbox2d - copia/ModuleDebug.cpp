@@ -28,6 +28,8 @@ bool ModuleDebug::Start()
 {
 	debug = false;
 	capFps = false;
+	restitutionC = false;
+	colliders = false;
 	return true;
 }
 
@@ -52,6 +54,8 @@ update_status ModuleDebug::Update()
 		if (App->input->GetKey(SDL_SCANCODE_6) == KEY_DOWN) colliders = !colliders;
 
 		if (App->input->GetKey(SDL_SCANCODE_7) == KEY_DOWN) capFps = !capFps;
+
+		if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN) restitutionC = !restitutionC;
 
 
 		if (grav == true)
@@ -83,6 +87,22 @@ update_status ModuleDebug::Update()
 		else
 		{
 			targetFPS = 60;
+		}
+
+		if (restitutionC == true)
+		{
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && App->physics->restitution < 2.0f)
+			{
+				App->physics->restitution++;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN && App->physics->restitution > 0.0f)
+			{
+				App->physics->restitution--;
+			}
+		}
+		else
+		{
+			App->physics->restitution = 0.3f;
 		}
 
 		if (App->physics->mouse_body != nullptr && App->physics->mouse_joint != nullptr)
