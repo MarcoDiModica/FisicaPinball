@@ -368,7 +368,20 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	int x, y;
 
 	App->player->score += bodyB->points;
-	App->audio->PlayFx(bonus_fx);
+	/*App->audio->PlayFx(bonus_fx);*/
+
+
+	if (bodyB->points == 0) {
+		
+	} else if (bodyB-> points != 0) {
+
+		App->audio->PlayFx(bonus_fx);
+	}
+
+
+
+
+
 
 	if (bodyB->Active && bodyB->cType == ColliderType::Esmeralds) {
 
