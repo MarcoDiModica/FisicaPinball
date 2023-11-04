@@ -34,7 +34,7 @@ bool ModulePhysics::Start()
 
 	world = new b2World(b2Vec2(GRAVITY_X, -GRAVITY_Y));
 	world->SetContactListener(this);
-
+	
 	FlipandoEstoy();
 	CreateCanon();
 
@@ -95,7 +95,7 @@ void ModulePhysics::FlipandoEstoy()
 	b2RevoluteJoint* rightFlipperJoint = (b2RevoluteJoint*)world->CreateJoint(&rightFlipperJointDef);
 
 	flipTexture1 = App->textures->Load("pinball/fliptex.png");
-	flipTexture2 = App->textures->Load("pinball/fliptex.png");
+	flipTexture2 = App->textures->Load("pinball/fliptex2.png");
 }
 
 void ModulePhysics::CreateCanon()
@@ -178,6 +178,7 @@ PhysBody* ModulePhysics::CreateStaticCircle(int x, int y, int radius, float Fric
 
 	return pbody;
 }
+
 
 PhysBody* ModulePhysics::CreateCoin(int x, int y, int radius)
 {
@@ -341,8 +342,8 @@ update_status ModulePhysics::PostUpdate()
 	//if(!debug)
 	//	return UPDATE_CONTINUE;
 
-	//App->renderer->Blit(flipTexture1, leftFlipperX, leftFlipperY, NULL, 0, leftFlipper->body->GetAngle() * RADTODEG, 0, 10 /*alto de la imagen*/ );
-	//App->renderer->Blit(flipTexture2, rightFlipperX, rightFlipperY, NULL, 0, rightFlipper->body->GetAngle() * RADTODEG, 20/*ancho de la imagen*/ , 10 /*alto de la imagen*/);
+	App->renderer->Blit(flipTexture1, leftFlipperX - 7, leftFlipperY - 7, NULL, 0, leftFlipper->body->GetAngle() * RADTODEG, 5, 8 /*alto de la imagen*/ );
+	App->renderer->Blit(flipTexture2, rightFlipperX - 36, rightFlipperY - 10, NULL, 0, rightFlipper->body->GetAngle() * RADTODEG, 36/*ancho de la imagen*/ , 8 /*alto de la imagen*/);
 
 	// Bonus code: this will iterate all objects in the world and draw the circles
 	// You need to provide your own macro to translate meters to pixels

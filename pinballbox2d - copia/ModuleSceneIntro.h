@@ -44,6 +44,7 @@ public:
 	bool sensed;
 
 	SDL_Texture* circle;
+	SDL_Texture* coin;
 	SDL_Texture* box;
 	SDL_Texture* rick;
 	SDL_Texture* map;
@@ -61,6 +62,8 @@ public:
 	Bumper* bumper1;
 	Bumper* bumper2;
 	Bumper* bumper3;
+
+	p2List_item<PhysBody*>* item = circles.getFirst();
 
 	int font;
 	int nBalls;

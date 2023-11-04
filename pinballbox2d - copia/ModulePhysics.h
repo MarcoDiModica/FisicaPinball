@@ -89,6 +89,7 @@ public:
 	PhysBody* RightCanon;
 	PhysBody* RightCanonAnchor;
 	SDL_Texture* canonTexture;
+	SDL_Texture* coin;
 	//Falta anim.h
 
 	//Ball

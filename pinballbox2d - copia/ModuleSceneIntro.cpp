@@ -29,7 +29,8 @@ bool ModuleSceneIntro::Start()
 
 	map = App->textures->Load("pinball/mapa_de_sonic.png");
 	circle = App->textures->Load("pinball/wheel.png"); 
-	//box = App->textures->Load("pinball/crate.png");
+	//box = App->textures->Load("pinball/a.png");
+	coin = App->textures->Load("pinball/coin.png");
 	//rick = App->textures->Load("pinball/rick_head.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	//font = App->fonts->Load();
@@ -199,7 +200,10 @@ bool ModuleSceneIntro::Start()
 	bumper2 = new Bumper(370,356, *App->physics);
 	bumper2 = new Bumper(309, 389, *App->physics);
 	
-
+	PhysBody* coin1 = App->physics->CreateCoin(138, 178, 8);
+	PhysBody* coin2 = App->physics->CreateCoin(128, 228, 8);
+	PhysBody* coin3 = App->physics->CreateCoin(128, 278, 8);
+	PhysBody* coin4 = App->physics->CreateCoin(148, 338, 8);
 
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 
@@ -256,31 +260,45 @@ update_status ModuleSceneIntro::Update()
 			ball = App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 10);
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
-		{
-			ball->body->GetFixtureList()->SetRestitution(0.7f);
-			App->physics->restitution = 0.7f;
-		}
-		if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
-		{
-			ball->body->GetFixtureList()->SetRestitution(0.3f);
-			App->physics->restitution = 0.3f;
-		}
+	}
 
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+	{
+		ball->body->GetFixtureList()->SetRestitution(0.7f);
+		App->physics->restitution = 0.7f;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+	{
+		ball->body->GetFixtureList()->SetRestitution(0.3f);
+		App->physics->restitution = 0.3f;
 	}
 
 	App->renderer->Blit(map,0,0,&maprect);
-	
-	/*p2List_item<PhysBody*>* item = circles.getFirst();
+	App->renderer->Blit(coin, 130, 170);
+	App->renderer->Blit(coin, 120, 220);
+	App->renderer->Blit(coin, 120, 270);
+	App->renderer->Blit(coin, 140, 330);
+
+
+	p2List_item<PhysBody*>* item = circles.getFirst();
+	p2List_item<PhysBody*>* next_item;
+
 	while (item != NULL)
 	{
 		int posx, posy;
 		item->data->GetPosition(posx, posy);
-		App->renderer->Blit(circle, posx, posy,NULL, 1, item->data->GetRotation());
+		App->renderer->Blit(circle, posx, posy, NULL, 1, item->data->GetRotation());
 
-		item = item->next;
-	}*/
-	
+		next_item = item->next;
+
+		if (posy > SCREEN_HEIGHT)
+		{
+			circles.del(item);
+			nBalls--;
+		}
+
+		item = next_item; 
+	}
 
 	return UPDATE_CONTINUE;
 }
