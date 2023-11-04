@@ -229,22 +229,6 @@ PhysBody* ModulePhysics::CreateCoin(int x, int y, int radius)
 	return pbody;
 }
 
-
-//PhysBody* ModulePhysics::CreateSpeedPad(int x, int y, int radius)
-//{
-//	b2BodyDef body;
-//	body.type = b2_kinematicBody;
-//	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
-//
-//	b2Body* b = world->CreateBody(&body);
-//
-//	b2CircleShape shape;
-//	shape.m_radius = PIXEL_TO_METERS(radius);
-//
-//	return pbody;
-//}
-
-
 PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
 {
 	b2BodyDef body;

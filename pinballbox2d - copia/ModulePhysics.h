@@ -153,6 +153,7 @@ public:
 	PhysBody* UpAnchor;
 	SDL_Texture* UpCanonTexture;
 
+
 	SDL_Texture* coin;
 	//Falta anim.h
 
