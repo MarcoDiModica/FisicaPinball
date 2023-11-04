@@ -199,7 +199,7 @@ bool ModuleSceneIntro::Start()
 		x += 21;
 		Esmeralds[i]->pBody->cType = ColliderType::Esmeralds;
 		Esmeralds[i]->pBody->Active = false;
-		Esmeralds[i]->pBody->points = 777;
+		Esmeralds[i]->pBody->points = 0;
 	}
 	
 
@@ -250,6 +250,11 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update()
 {
 	
+	if (availableBalls == 0) {
+
+		
+	}
+
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		App->physics->leftFlipper->body->ApplyForceToCenter(b2Vec2(0, -20), true);
@@ -318,7 +323,14 @@ update_status ModuleSceneIntro::Update()
 		if (posy > SCREEN_HEIGHT)
 		{
 			circles.del(item);
-			availableBalls--;
+			
+
+			if (availableBalls == 0) {
+				App->player->Loose();
+				availableBalls = 3;
+				LOG("You've lost");
+			}
+
 		}
 
 		item = next_item; 
@@ -366,7 +378,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	if (bodyB->Active && bodyB->cType == ColliderType::Esmeralds) {
 
 		int i = 0;
-		
+		App->player->score += 777;
 		bodyB->Active = false;
 	
 
