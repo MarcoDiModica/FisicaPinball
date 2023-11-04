@@ -35,7 +35,7 @@ bool ModuleSceneIntro::Start()
 	//rick = App->textures->Load("pinball/rick_head.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	//font = App->fonts->Load();
-
+	App->audio->PlayMusic("pinball/musik.mp3"); // MARCO CAMBIA EL FORMATO DEL ARCHIVO QUE SI NO, NO VA	
 
 	
 	
@@ -290,16 +290,16 @@ update_status ModuleSceneIntro::Update()
 
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
-	{
-		ball->body->GetFixtureList()->SetRestitution(0.7f);
-		App->physics->restitution = 0.7f;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
-	{
-		ball->body->GetFixtureList()->SetRestitution(0.3f);
-		App->physics->restitution = 0.3f;
-	}
+	//if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+	//{
+	//	ball->body->GetFixtureList()->SetRestitution(0.7f);
+	//	App->physics->restitution = 0.7f;
+	//}
+	//if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+	//{
+	//	ball->body->GetFixtureList()->SetRestitution(0.3f);
+	//	App->physics->restitution = 0.3f;
+	//}
 
 	App->renderer->Blit(map,0,0,&maprect);
 	App->renderer->Blit(coin, 130, 170);

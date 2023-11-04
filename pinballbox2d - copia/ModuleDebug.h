@@ -34,6 +34,7 @@ private:
 	bool grav;
 	bool capFps;
 	bool colliders;
+	bool restitutionC;
 };
 
 #endif // !__DEBUG_H__
