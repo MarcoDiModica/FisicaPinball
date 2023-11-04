@@ -181,6 +181,29 @@ bool ModuleSceneIntro::Start()
 	339, 568,
 	330, 578
 	};
+
+	int newBumper1[10] = {
+	312, 269+5,
+	343, 285+5,
+	343, 277+5,
+	314, 259+5,
+	310, 265+5
+	};
+
+	int top_bumper[8] = {
+	160, 225-5,
+	273, 225-5,
+	273, 220-5,
+	164, 220-5
+	};
+
+	int newBumper2[8] = {
+	344, 256-4,
+	375, 272-4,
+	381, 270-4,
+	345, 250-4
+	};
+
 	EsmeraldTexture = App->textures->Load("pinball/chaos_esmeralds.png");
 	int x = 0;
 	esmeraldsPositions[0] = b2Vec2(137, 157);
@@ -213,9 +236,14 @@ bool ModuleSceneIntro::Start()
 	App->physics->CreateStaticChain(0, 0, RightFlipperWall, 16);
 	
 	// --- polygon bumpers---//
-	PhysBody* leftBumper = App->physics->CreateStaticChain(0, 0, LeftPolyBumper, 16, 0.7f, 0.2f);
-	PhysBody* rightBumper = App->physics->CreateStaticChain(0, 0, RightPolyBumper, 12, 0.7f, 0.2f);
-	leftBumper->points = 74; rightBumper->points = 74;
+	PhysBody* leftBumper = App->physics->CreateStaticChain(0, 0, LeftPolyBumper, 16, 0.7f, 0.4f);
+	PhysBody* rightBumper = App->physics->CreateStaticChain(0, 0, RightPolyBumper, 12, 0.7f, 0.4f);
+	PhysBody* TopBumper1 = App->physics->CreateStaticChain(0, 0, newBumper1, 10, 0.7f, 0.4f);
+	PhysBody* TopBumper2 = App->physics->CreateStaticChain(0, 0, newBumper2, 8, 0.7f, 0.4f);
+	leftBumper->points = 74; rightBumper->points = 74; TopBumper1->points = 74; TopBumper2->points = 74;
+
+	PhysBody* TopBumper = App->physics->CreateStaticChain(0, 0, top_bumper, 8, 1.0f, 0.4f);
+	TopBumper->points = 74;
 
 	PhysBody* EggHead1 =  App->physics->CreateStaticCircle(236, 364, 24, 0.2f);
 	PhysBody* EggHead2 = App->physics->CreateStaticCircle(71, 432, 24, 0.2f);
@@ -257,17 +285,17 @@ update_status ModuleSceneIntro::Update()
 
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		App->physics->leftFlipper->body->ApplyForceToCenter(b2Vec2(0, -20), true);
+		App->physics->leftFlipper->body->ApplyForceToCenter(b2Vec2(0, -40), true);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		App->physics->rightFlipper->body->ApplyForceToCenter(b2Vec2(0, -20), true);
+		App->physics->rightFlipper->body->ApplyForceToCenter(b2Vec2(0, -40), true);
 	}
 
 	if (!App->debug->debug)
 	{
 		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && availableBalls > 0 && nBalls == 0)
 		{
-			circles.add(App->physics->CreateCircle(410, 580, 10));
+			circles.add(App->physics->CreateCircle(410, 580, 10,1.5f));
 			circles.getLast()->data->listener = this;
 			availableBalls--;
 			nBalls++;

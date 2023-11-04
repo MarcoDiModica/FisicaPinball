@@ -17,7 +17,7 @@ public:
 	uint32 ReadSec() const;
 	float ReadMSec() const;
 
-	int something();
+
 
 private:
 	uint32 startTime;

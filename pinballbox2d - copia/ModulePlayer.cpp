@@ -58,7 +58,7 @@ void ModulePlayer::Loose() {
 
 	prevScore = score;
 	score = 0;
-
+	collectedEsmeralds = 0;
 
 }
 
