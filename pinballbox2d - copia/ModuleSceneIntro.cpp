@@ -401,7 +401,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		App->player->collectedEsmeralds++;
 	
 		if (App->player->collectedEsmeralds > 6) {
-
+			circle = App->textures->Load("pinball/super_wheel.png");
 		}
 		
 
@@ -415,7 +415,7 @@ void ModuleSceneIntro::Reload() {
 		Esmeralds[i]->pBody->Active = true;
 		ActiveEsmeralds = 0;
 
-		circle = App->textures->Load("");
+		
 		
 	}
 
