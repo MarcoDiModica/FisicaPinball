@@ -254,18 +254,10 @@ update_status ModuleSceneIntro::Update()
 
 	if (!App->debug->debug)
 	{
-		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN && nBalls == 0)
-		{
-			circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 10));
-			circles.getLast()->data->listener = this;
-			nBalls++;
-		}
-
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && nBalls == 0)
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && availableBalls != 0)
 		{
 			circles.add(App->physics->CreateCircle(410, 580, 10));
 			circles.getLast()->data->listener = this;
-			nBalls++;
 		}
 	}
 
@@ -301,6 +293,8 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(coin, 120, 220);
 	App->renderer->Blit(coin, 120, 270);
 	App->renderer->Blit(coin, 140, 330);
+	App->renderer->Blit(App->physics->flipTexture1 , App->physics->leftFlipperX - 7, App->physics->leftFlipperY - 7, NULL, 0, App->physics->leftFlipper->body->GetAngle() * RADTODEG, 5, 8 /*alto de la imagen*/);
+	App->renderer->Blit(App->physics->flipTexture2, App->physics->rightFlipperX - 36, App->physics->rightFlipperY - 10, NULL, 0, App->physics->rightFlipper->body->GetAngle() * RADTODEG, 36/*ancho de la imagen*/, 8 /*alto de la imagen*/);
 
 
 	p2List_item<PhysBody*>* item = circles.getFirst();
@@ -317,7 +311,7 @@ update_status ModuleSceneIntro::Update()
 		if (posy > SCREEN_HEIGHT)
 		{
 			circles.del(item);
-			nBalls--;
+			availableBalls--;
 		}
 
 		item = next_item; 

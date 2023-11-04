@@ -75,6 +75,7 @@ public:
 
 	int font;
 	int nBalls;
+	int availableBalls = 3;
 
 };
 

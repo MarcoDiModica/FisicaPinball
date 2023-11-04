@@ -135,17 +135,27 @@ public:
 	//Cañones
 	void CreateCanon();
 
+	//Cañón derecha
 	int RightCanonX, RightCanonY;
 	int canonWidth, canonHeight;
 	b2Vec2 canonCenter = b2Vec2(RightCanonX + canonWidth / 2, RightCanonY + 10);
 
 	PhysBody* RightCanon;
 	PhysBody* RightCanonAnchor;
-	SDL_Texture* canonTexture;
+	SDL_Texture* RightCanonTexture;
+
+	//Cañón arriba
+	int UpCanonX, UpCanonY;
+	b2Vec2 UpcanonCenter = b2Vec2(UpCanonX + canonWidth / 2, UpCanonY + 10);
+
+	PhysBody* UpCanon;
+	PhysBody* UpAnchor;
+	SDL_Texture* UpCanonTexture;
+
 	SDL_Texture* coin;
 	//Falta anim.h
 
-	//Ball
+
 
 	
 
