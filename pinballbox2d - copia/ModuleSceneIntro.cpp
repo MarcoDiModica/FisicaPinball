@@ -265,17 +265,18 @@ update_status ModuleSceneIntro::Update()
 
 	if (!App->debug->debug)
 	{
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && availableBalls > 0)
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && availableBalls > 0 && nBalls == 0)
 		{
 			circles.add(App->physics->CreateCircle(410, 580, 10));
 			circles.getLast()->data->listener = this;
 			availableBalls--;
+			nBalls++;
 		}
 	}
 
 	if (App->debug->debug)
 	{
-		nBalls = 0;
+		
 		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 		{
 			circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 10));
@@ -323,6 +324,7 @@ update_status ModuleSceneIntro::Update()
 		if (posy > SCREEN_HEIGHT)
 		{
 			circles.del(item);
+
 			
 
 			if (availableBalls == 0) {
@@ -331,7 +333,9 @@ update_status ModuleSceneIntro::Update()
 				LOG("You've lost");
 			}
 
+			nBalls--;
 		}
+
 
 		item = next_item; 
 	}
@@ -373,7 +377,20 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	int x, y;
 
 	App->player->score += bodyB->points;
-	App->audio->PlayFx(bonus_fx);
+	/*App->audio->PlayFx(bonus_fx);*/
+
+
+	if (bodyB->points == 0) {
+		
+	} else if (bodyB-> points != 0) {
+
+		App->audio->PlayFx(bonus_fx);
+	}
+
+
+
+
+
 
 	if (bodyB->Active && bodyB->cType == ColliderType::Esmeralds) {
 

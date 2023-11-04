@@ -81,7 +81,7 @@ public:
 	p2List_item<PhysBody*>* item = circles.getFirst();
 
 	int font;
-	int nBalls;
+	int nBalls = 0;
 	int availableBalls = 3;
 
 };
