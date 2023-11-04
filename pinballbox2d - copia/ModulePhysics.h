@@ -3,6 +3,8 @@
 #include "Application.h"
 #include "Globals.h"
 #include "Box2D/Box2D/Box2D.h"
+#include "ModulePhysics.h"
+#include <cmath>
 
 #define GRAVITY_X 0.0f
 //#define GRAVITY_Y -5.0f
@@ -34,7 +36,57 @@ public:
 
 class ModulePhysics ;
 
+class ChaosEsmerald {
 
+public:
+	bool Active = false;
+
+	PhysBody* pBody = nullptr;
+	ModulePhysics* myPhysics;
+	b2Vec2 position;
+	int force = 40;
+	b2Vec2 center;
+
+	SDL_Texture* texture;
+	SDL_Rect rect = { 0,0,0,0 };
+
+	int currentTime = 0;
+	int changeTime = 90;
+
+	bool isMovingUp = true;
+
+	ChaosEsmerald(ModulePhysics* Physics) {
+	
+		myPhysics = Physics;
+	
+	
+	
+	};
+
+	void Update() {
+		if (isMovingUp) {
+			// Move up
+			pBody->body->SetTransform(pBody->body->GetPosition() + b2Vec2(0.0f, 0.015f), 0.0f);
+			currentTime++;
+
+			
+			if (currentTime >= changeTime) {
+				isMovingUp = false;
+				currentTime = 0.0f;
+			}
+		}
+		else {
+			// Move down
+			pBody->body->SetTransform(pBody->body->GetPosition() - b2Vec2(0.0f, 0.015f), 0.0f);
+			
+			currentTime++;
+			if (currentTime >= changeTime) {
+				isMovingUp = true;
+				currentTime = 0.0f;
+			}
+		}
+	}
+};
 
 // Module --------------------------------------
 class ModulePhysics : public Module, public b2ContactListener 
@@ -57,7 +109,7 @@ public:
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size);
 	PhysBody* ModulePhysics::CreateStaticChain(int x, int y, int* points, int size, float Restitution = 0, float Friction = 0.2f);
-
+	ChaosEsmerald* ModulePhysics::CreateChaosEsmerald(int x, int y, ModulePhysics* Physics);
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
 
@@ -100,6 +152,7 @@ public:
 private:
 
 	float GRAVITY_Y = -2.0f;
+public:
 	b2World* world;
 	b2MouseJoint* mouse_joint;
 	b2Body* mouse_body;

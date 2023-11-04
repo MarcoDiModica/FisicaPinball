@@ -27,6 +27,9 @@ public:
 
 };
 
+
+
+
 class ModuleSceneIntro : public Module
 {
 public:
@@ -38,6 +41,11 @@ public:
 	bool CleanUp();
 
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
+
+	ChaosEsmerald* Esmeralds[7];
+	b2Vec2 esmeraldsPositions[7];
+	SDL_Texture* EsmeraldTexture;
+
 
 public:
 	PhysBody* sensor;

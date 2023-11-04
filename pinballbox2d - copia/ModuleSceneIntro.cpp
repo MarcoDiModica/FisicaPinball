@@ -36,6 +36,8 @@ bool ModuleSceneIntro::Start()
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	//font = App->fonts->Load();
 
+
+	
 	
 	int mapa_de_sonic[90] = {
 	349, 254,
@@ -179,8 +181,26 @@ bool ModuleSceneIntro::Start()
 	339, 568,
 	330, 578
 	};
+	EsmeraldTexture = App->textures->Load("pinball/chaos_esmeralds.png");
+	int x = 0;
+	esmeraldsPositions[0] = b2Vec2(137, 157);
+	esmeraldsPositions[1] = b2Vec2(338, 358);
+	esmeraldsPositions[2] = b2Vec2(310, 161);
+	esmeraldsPositions[3] = b2Vec2(171, 357);
+	esmeraldsPositions[4] = b2Vec2(225, 547);
+	esmeraldsPositions[5] = b2Vec2(135, 417);
+	esmeraldsPositions[6] = b2Vec2(192, 477);
 
+	for (int i = 0; i < 7; ++i) {
+		Esmeralds[i] = App->physics->CreateChaosEsmerald(  esmeraldsPositions[i].x, esmeraldsPositions[i].y, App->physics);
+		Esmeralds[i]->texture = EsmeraldTexture;
 	
+		Esmeralds[i]->rect = { x,0,21,18 };
+		x += 21;
+		//Esmeralds[i]->pBody->body->SetTransform(esmeraldsPositions[i], 0);
+	}
+	
+
 
 	App->physics->CreateStaticChain(0,0,mapa_de_sonic,90);
 	App->physics->CreateStaticChain(420, 300, Right_Wall, 26);
@@ -223,6 +243,7 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
+	
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		App->physics->leftFlipper->body->ApplyForceToCenter(b2Vec2(0, -20), true);
@@ -301,6 +322,24 @@ update_status ModuleSceneIntro::Update()
 
 		item = next_item; 
 	}
+
+	for (int i = 0; i < 7; ++i) {
+		if (Esmeralds[i]->Active == false) {
+
+			Esmeralds[i]->Update();
+			if (i == 0) {
+				LOG("Here");
+			}
+
+			b2Vec2 pos = Esmeralds[i]->pBody->body->GetPosition();
+			float x = pos.x;
+			float y = pos.y;
+
+			App->renderer->Blit(Esmeralds[i]->texture,
+			METERS_TO_PIXELS(x)-10	, METERS_TO_PIXELS(y) -10, &Esmeralds[i]->rect);
+		}
+	}
+
 
 	return UPDATE_CONTINUE;
 }

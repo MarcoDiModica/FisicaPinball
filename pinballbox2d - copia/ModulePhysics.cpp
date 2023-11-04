@@ -7,6 +7,7 @@
 #include "math.h"
 #include "ModuleTextures.h"
 #include "ModuleDebug.h"
+#include "ModuleSceneIntro.h"
 
 #ifdef _DEBUG
 #pragma comment( lib, "Box2D/libx86/Debug/Box2D.lib" )
@@ -247,6 +248,7 @@ PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int heig
 	fixture.shape = &box;
 	fixture.density = 1.0f;
 	fixture.isSensor = true;
+	
 
 	b->CreateFixture(&fixture);
 
@@ -255,6 +257,8 @@ PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int heig
 	b->SetUserData(pbody);
 	pbody->width = width;
 	pbody->height = height;
+
+	pbody->body->SetGravityScale(0);
 
 	return pbody;
 }
@@ -291,6 +295,16 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size)
 	pbody->width = pbody->height = 0;
 
 	return pbody;
+}
+
+ChaosEsmerald* ModulePhysics::CreateChaosEsmerald(int x, int y, ModulePhysics* Physics) {
+
+	ChaosEsmerald* Esmerald = new ChaosEsmerald(this);
+	
+	 Esmerald->pBody =  CreateRectangleSensor(x, y, 20, 20);
+	 Esmerald->pBody->body->SetGravityScale(0.0f);
+
+	return Esmerald;
 }
 
 PhysBody* ModulePhysics::CreateStaticChain(int x, int y, int* points, int size, float Restitution, float Friction )
