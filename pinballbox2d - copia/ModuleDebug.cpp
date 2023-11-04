@@ -102,7 +102,7 @@ update_status ModuleDebug::Update()
 		}
 		else
 		{
-			App->physics->restitution = 0.7f;
+			App->physics->restitution = 0.3f;
 		}
 
 		if (App->physics->mouse_body != nullptr && App->physics->mouse_joint != nullptr)
