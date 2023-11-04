@@ -318,6 +318,8 @@ update_status ModuleSceneIntro::Update()
 		item = next_item; 
 	}
 
+	if (EsmeraldSpawnTimer.ReadSec() > 10) {
+
 		Esmeralds[ActiveEsmeralds]->pBody->Active = true;
 		ActiveEsmeralds++;
 		EsmeraldSpawnTimer.Start();
