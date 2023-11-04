@@ -197,7 +197,8 @@ bool ModuleSceneIntro::Start()
 	
 		Esmeralds[i]->rect = { x,0,21,18 };
 		x += 21;
-		//Esmeralds[i]->pBody->body->SetTransform(esmeraldsPositions[i], 0);
+		Esmeralds[i]->pBody->cType = ColliderType::Esmeralds;
+		Esmeralds[i]->pBody->Active = false;
 	}
 	
 
@@ -228,7 +229,7 @@ bool ModuleSceneIntro::Start()
 	PhysBody* coin4 = App->physics->CreateCoin(148, 338, 8);
 
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
-
+	EsmeraldSpawnTimer.Start();
 	return ret;
 }
 
@@ -317,8 +318,15 @@ update_status ModuleSceneIntro::Update()
 		item = next_item; 
 	}
 
+		Esmeralds[ActiveEsmeralds]->pBody->Active = true;
+		ActiveEsmeralds++;
+		EsmeraldSpawnTimer.Start();
+
+	}
+
+
 	for (int i = 0; i < 7; ++i) {
-		if (Esmeralds[i]->Active == false) {
+		if (Esmeralds[i]->pBody->Active == true) {
 
 			Esmeralds[i]->Update();
 			if (i == 0) {
@@ -344,4 +352,15 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 	App->player->score += bodyB->points;
 	App->audio->PlayFx(bonus_fx);
+
+	if (bodyB->cType == ColliderType::Esmeralds) {
+
+		int i = 0;
+		App->player->score += 50;
+		bodyB->Active = false;
+	
+
+		
+
+	}
 }

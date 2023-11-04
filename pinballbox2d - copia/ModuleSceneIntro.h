@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Globals.h"
 #include "p2Point.h"
+#include "Timer.h"
 #include "ModulePhysics.h"
 
 #define DEGTORAD 0.0174532925199432957f
@@ -46,6 +47,8 @@ public:
 	b2Vec2 esmeraldsPositions[7];
 	SDL_Texture* EsmeraldTexture;
 
+	Timer EsmeraldSpawnTimer;
+	uint ActiveEsmeralds;
 
 public:
 	PhysBody* sensor;
