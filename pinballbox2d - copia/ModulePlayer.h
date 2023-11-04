@@ -17,6 +17,7 @@ public:
 	int font = 20;
 	char scoreText[10] = { "\0" };
 	int score = 0;
+	int maxScore;
 
 public:
 
