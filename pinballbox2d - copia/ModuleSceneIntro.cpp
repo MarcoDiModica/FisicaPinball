@@ -271,7 +271,7 @@ update_status ModuleSceneIntro::Update()
 
 	if (App->debug->debug)
 	{
-		nBalls = 0;
+		
 		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 		{
 			circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 10));
@@ -319,7 +319,6 @@ update_status ModuleSceneIntro::Update()
 		if (posy > SCREEN_HEIGHT)
 		{
 			circles.del(item);
-			availableBalls--;
 			nBalls--;
 		}
 
