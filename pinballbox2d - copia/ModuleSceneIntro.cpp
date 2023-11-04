@@ -199,6 +199,7 @@ bool ModuleSceneIntro::Start()
 		x += 21;
 		Esmeralds[i]->pBody->cType = ColliderType::Esmeralds;
 		Esmeralds[i]->pBody->Active = false;
+		Esmeralds[i]->pBody->points = 100;
 	}
 	
 
@@ -324,9 +325,11 @@ update_status ModuleSceneIntro::Update()
 
 	if (EsmeraldSpawnTimer.ReadSec() > 10) {
 
-		Esmeralds[ActiveEsmeralds]->pBody->Active = true;
-		ActiveEsmeralds++;
-		EsmeraldSpawnTimer.Start();
+		if (ActiveEsmeralds < 7) {
+			Esmeralds[ActiveEsmeralds]->pBody->Active = true;
+			ActiveEsmeralds++;
+			EsmeraldSpawnTimer.Start();
+		}
 
 	}
 
@@ -362,7 +365,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	if (bodyB->Active && bodyB->cType == ColliderType::Esmeralds) {
 
 		int i = 0;
-		App->player->score += 50;
+		
 		bodyB->Active = false;
 	
 
