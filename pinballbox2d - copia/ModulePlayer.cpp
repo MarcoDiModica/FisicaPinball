@@ -37,8 +37,8 @@ update_status ModulePlayer::Update()
 {
 
 	sprintf_s(scoreText, 10, "%d", score);
-	App->fonts->BlitText(23, 159, font, scoreText);
-	App->fonts->BlitText(60, 159, font, "pts");
+	App->fonts->BlitText(180, 50, font, scoreText);
+	App->fonts->BlitText(220, 20, font, "pts");
 
 	return UPDATE_CONTINUE;
 }

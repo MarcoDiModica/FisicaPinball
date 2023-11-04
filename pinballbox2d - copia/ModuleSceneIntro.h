@@ -73,6 +73,10 @@ public:
 	Bumper* bumper1;
 	Bumper* bumper2;
 	Bumper* bumper3;
+	Bumper* bumper4;
+	Bumper* bumper5;
+	Bumper* bumper6;
+	Bumper* bumper7;
 
 	p2List_item<PhysBody*>* item = circles.getFirst();
 

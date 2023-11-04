@@ -114,6 +114,7 @@ public:
 	PhysBody* CreateCircle(int x, int y, int radius, float Friction = 0.2f , float Restitution = 0.3f, b2BodyType myType = b2BodyType::b2_dynamicBody);
 	PhysBody* ModulePhysics::CreateStaticCircle(int x, int y, int radius, float Friction = 0.2f, float Restitution = 0.3f);
 	PhysBody* CreateCoin(int x, int y, int radius);
+	PhysBody* CreateSpeedPad(int x, int y, int radius);
 	PhysBody* CreateRectangle(int x, int y, int width, int height);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size);
@@ -160,6 +161,7 @@ public:
 	PhysBody* UpCanon;
 	PhysBody* UpAnchor;
 	SDL_Texture* UpCanonTexture;
+
 
 	SDL_Texture* coin;
 	//Falta anim.h

@@ -216,13 +216,17 @@ bool ModuleSceneIntro::Start()
 	PhysBody* rightBumper = App->physics->CreateStaticChain(0, 0, RightPolyBumper, 12, 0.7f, 0.2f);
 	leftBumper->points = 3; rightBumper->points = 3;
 
-	PhysBody* EggHead1 =  App->physics->CreateStaticCircle(234, 360, 22, 0.2f);
-	PhysBody* EggHead2 = App->physics->CreateStaticCircle(71, 432, 22, 0.2f);
+	PhysBody* EggHead1 =  App->physics->CreateStaticCircle(236, 364, 24, 0.2f);
+	PhysBody* EggHead2 = App->physics->CreateStaticCircle(71, 432, 24, 0.2f);
 
-	bumper1 = new Bumper(309, 335, *App->physics); bumper1->pBody->points = 4;
-	bumper2 = new Bumper(370,356, *App->physics); bumper2->pBody->points = 4;
-	bumper3 = new Bumper(309, 389, *App->physics); bumper3->pBody->points = 4;
-	
+	bumper1 = new Bumper(309, 340, *App->physics); bumper1->pBody->points = 4;
+	bumper2 = new Bumper(372,360, *App->physics); bumper2->pBody->points = 4;
+	bumper3 = new Bumper(309, 392, *App->physics); bumper3->pBody->points = 4;
+	bumper4 = new Bumper(230, 185, *App->physics); bumper4->pBody->points = 4;
+	bumper5 = new Bumper(290, 185, *App->physics); bumper5->pBody->points = 4;
+	bumper6 = new Bumper(265, 150, *App->physics); bumper6->pBody->points = 4;
+	bumper7 = new Bumper(185, 147, *App->physics); bumper7->pBody->points = 4;
+
 	PhysBody* coin1 = App->physics->CreateCoin(138, 178, 8);
 	PhysBody* coin2 = App->physics->CreateCoin(128, 228, 8);
 	PhysBody* coin3 = App->physics->CreateCoin(128, 278, 8);
