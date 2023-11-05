@@ -23,5 +23,8 @@ If you manage to get all 7 Chaos Emeralds, Sonic will become Super Sonic, and yo
 ### Marco Di Modica
 ### Jordi Tur
 
+## Differences with the original
+The original game was only used to extract the map and some other sprites. The gameplay itself is completely different, ranging from differences in movement, camera, mechanics and genre itself.
+
 ## Github Link
 [LINK](https://github.com/MarcoDiModica/FisicaPinball)
