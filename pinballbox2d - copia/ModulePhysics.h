@@ -44,6 +44,7 @@ public:
 public:
 	int width, height;
 	b2Body* body;
+	b2Vec2 force = b2Vec2(0.0f, 0.0f);
 	Module* listener;
 	int points = 0;
 };
@@ -58,7 +59,7 @@ public:
 	Timer ActiveTime;
 
 	int waitTime;
-
+	
 	SDL_Texture* texture = nullptr;
 
 	BoostPad(PhysBody* mybod) {
@@ -155,7 +156,7 @@ public:
 	PhysBody* CreateChain(int x, int y, int* points, int size);
 	PhysBody* ModulePhysics::CreateStaticChain(int x, int y, int* points, int size, float Restitution = 0, float Friction = 0.2f);
 	ChaosEsmerald* ModulePhysics::CreateChaosEsmerald(int x, int y, ModulePhysics* Physics);
-	BoostPad* ModulePhysics::CreateBoostPad(int x, int y, int* points, int size, ModulePhysics* Physics, int waitTime = 2);
+	BoostPad* ModulePhysics::CreateBoostPad(int x, int y, int* points, int size, ModulePhysics* Physics,b2Vec2 force, int waitTime = 2);
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
 

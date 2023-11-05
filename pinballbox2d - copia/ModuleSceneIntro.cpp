@@ -43,7 +43,7 @@ bool ModuleSceneIntro::Start()
 	palanca_fx = App->audio->LoadFx("pinball/palanca.ogg");
 
 	//font = App->fonts->Load();
-	App->audio->PlayMusic("pinball/musik.ogg"); // MARCO CAMBIA EL FORMATO DEL ARCHIVO QUE SI NO, NO VA	
+	App->audio->PlayMusic("pinball/musik.ogg"); 
 	boost_texture = App->textures->Load("pinball/boostpad.png");
 	
 	RingSpin.PushBack({ 0,0, 18,16 });
@@ -289,8 +289,8 @@ bool ModuleSceneIntro::Start()
 	App->physics->CreateStaticChain(0, 0, RightFlipperWall, 16);
 	
 	// --- polygon bumpers---//
-	PhysBody* leftBumper = App->physics->CreateStaticChain(0, 0, LeftPolyBumper, 16, 0.7f, 0.4f);
-	PhysBody* rightBumper = App->physics->CreateStaticChain(0, 0, RightPolyBumper, 12, 0.7f, 0.4f);
+	PhysBody* leftBumper = App->physics->CreateStaticChain(0, 0, LeftPolyBumper, 16, 0.5f, 0.4f);
+	PhysBody* rightBumper = App->physics->CreateStaticChain(0, 0, RightPolyBumper, 12, 0.5f, 0.4f);
 	PhysBody* TopBumper1 = App->physics->CreateStaticChain(0, 0, newBumper1, 10, 0.7f, 0.4f);
 	PhysBody* TopBumper2 = App->physics->CreateStaticChain(0, 0, newBumper2, 8, 0.7f, 0.4f);
 	leftBumper->points = 74; rightBumper->points = 74; TopBumper1->points = 74; TopBumper2->points = 74;
@@ -318,16 +318,28 @@ bool ModuleSceneIntro::Start()
 	 coin6 = App->physics->CreateCoin(268, 391, 8); coin6->cType = ColliderType::Ring;
 	 coin7 = App->physics->CreateCoin(267, 345, 8); coin7->cType = ColliderType::Ring;
 	 coin8 = App->physics->CreateCoin(233, 329, 8); coin8->cType = ColliderType::Ring;
+
+	 coin9 = App->physics->CreateCoin( 95, 400, 8); coin9->cType = ColliderType::Ring;
+	 coin10 = App->physics->CreateCoin(54, 396, 8); coin10->cType = ColliderType::Ring;
+	 coin11 = App->physics->CreateCoin(34, 440, 8); coin11->cType = ColliderType::Ring;
+	 coin12 = App->physics->CreateCoin(68, 470, 8); coin12->cType = ColliderType::Ring;
 	int boostPadcoords[8] = {
 	118, 320,
 	150, 370,
 	179, 350,
 	146, 301
 	};
+	int boostpad2[8] = {
+	195, 155,
+	195, 195,
+	277, 195,
+	277, 155
+	};
 
-	BoostPad1 = App->physics->CreateBoostPad(0, 0, boostPadcoords, 8, App->physics);
+	BoostPad1 = App->physics->CreateBoostPad(0, 0, boostPadcoords, 8, App->physics, b2Vec2(-20, -100));
 	BoostPad1->texture = boost_texture;
-
+	BoostPad2 = App->physics->CreateBoostPad(0, 0, boostpad2, 8, App->physics,b2Vec2(-40,0));
+	BoostPad2->texture = boost_texture;
 
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 	EsmeraldSpawnTimer.Start();
@@ -414,6 +426,15 @@ update_status ModuleSceneIntro::Update()
 		SDL_Rect r = { 72,0,72,41 };
 		App->renderer->Blit(boost_texture, 110, 316, &r, 1.0f, 60);
 	}
+	BoostPad2->Update();
+	if (BoostPad2->pBody->Active == true) {
+		SDL_Rect r = { 0,0,72,41 };
+		App->renderer->Blit(boost_texture, 214-15, 151, &r, 1.0f, -0);
+	}
+	else {
+		SDL_Rect r = { 72,0,72,41 };
+		App->renderer->Blit(boost_texture, 214-15, 151, &r, 1.0f, -0);
+	}
 
 	p2List_item<PhysBody*>* item = circles.getFirst();
 	p2List_item<PhysBody*>* next_item;
@@ -498,7 +519,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 	if (bodyB->cType == ColliderType::Boost && bodyB->Active == true) {
 
-		bodyA->body->ApplyForce(b2Vec2(-20, -100), b2Vec2(0, 0), true);
+		bodyA->body->ApplyForce(bodyB->force, b2Vec2(0, 0), true);
 		App->audio->PlayFx(dash_fx);
 
 	}
@@ -554,6 +575,10 @@ void ModuleSceneIntro::Reload() {
 	coin6->collected = false; coin6->Active = true;
 	coin7->collected = false; coin7->Active = true;
 	coin8->collected = false; coin8->Active = true;
+	coin9->collected = false; coin9->Active = true;
+	coin10->collected = false; coin10->Active = true;
+	coin11->collected = false; coin11->Active = true;
+	coin12->collected = false; coin12->Active = true;
 
 }
 
@@ -643,6 +668,50 @@ void ModuleSceneIntro::RingLogic() {
 			coin8->collected = true;
 
 			RingAnim8 = &RingSpin;
+		}
+	}
+	if (coin9->Active)App->renderer->Blit(coin, 95-8, 400-8, &RingAnim->GetCurrentFrame());
+	else if (coin9->collected == false) {
+		RingAnim9 = &RingSpark;
+		RingAnim9->Update();
+		App->renderer->Blit(coin, 95 - 8, 400 - 8, &RingAnim9->GetCurrentFrame());
+		if (RingAnim9->HasFinished()) {
+			coin9->collected = true;
+
+			RingAnim9 = &RingSpin;
+		}
+	}
+	if (coin10->Active)App->renderer->Blit(coin, 54-8, 396-8, &RingAnim->GetCurrentFrame());
+	else if (coin10->collected == false) {
+		RingAnim10 = &RingSpark;
+		RingAnim10->Update();
+		App->renderer->Blit(coin, 54-8, 396-8, &RingAnim10->GetCurrentFrame());
+		if (RingAnim10->HasFinished()) {
+			coin10->collected = true;
+
+			RingAnim10 = &RingSpin;
+		}
+	}
+	if (coin11->Active)App->renderer->Blit(coin, 34-8, 440-8, &RingAnim->GetCurrentFrame());
+	else if (coin11->collected == false) {
+		RingAnim11 = &RingSpark;
+		RingAnim11->Update();
+		App->renderer->Blit(coin, 34-8, 440-8, &RingAnim11->GetCurrentFrame());
+		if (RingAnim11->HasFinished()) {
+			coin11->collected = true;
+
+			RingAnim11 = &RingSpin;
+		}
+	}
+	if (coin12->Active)App->renderer->Blit(coin, 68-8, 470-8, &RingAnim->GetCurrentFrame());
+	else if (coin12->collected == false) {
+		RingAnim12 = &RingSpark;
+		RingAnim12->Update();
+		App->renderer->Blit(coin, 68-8, 470-8, &RingAnim12->GetCurrentFrame());
+		if (RingAnim12->HasFinished()) {
+			coin12->collected = true;
+
+			RingAnim12 = &RingSpin;
 		}
 	}
 }
