@@ -22,7 +22,8 @@
 enum ColliderType {
 	Esmeralds,
 	Boost,
-	notEsmeralds
+	notEsmeralds,
+	Ring
 };
 
 class PhysBody
@@ -38,6 +39,7 @@ public:
 
 	ColliderType cType = notEsmeralds;
 	bool Active = true;
+	bool collected = false;
 public:
 	int width, height;
 	b2Body* body;

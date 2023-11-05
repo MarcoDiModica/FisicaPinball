@@ -8,6 +8,7 @@
 #include "ModulePhysics.h"
 #include "Animation.h"
 
+
 #define DEGTORAD 0.0174532925199432957f
 
 struct PhysBody;
@@ -44,6 +45,7 @@ public:
 
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 	void Reload();
+	void RingLogic();
 
 	ChaosEsmerald* Esmeralds[7];
 	b2Vec2 esmeraldsPositions[7];
@@ -54,7 +56,20 @@ public:
 	uint ActiveEsmeralds;
 
 	Animation* RingAnim;
+
+	Animation* RingAnim1;
+	Animation* RingAnim2;
+	Animation* RingAnim3;
+	Animation* RingAnim4;
+	Animation* RingAnim5;
+	Animation* RingAnim6;
+	Animation* RingAnim7;
+	Animation* RingAnim8;
+
+
 	Animation RingSpin;
+	Animation RingSpark;
+	Animation noRing;
 
 public:
 	PhysBody* sensor;
@@ -67,6 +82,7 @@ public:
 	SDL_Texture* map;
 	SDL_Rect maprect;
 	uint bonus_fx;
+	uint ring_fx;
 
 	p2List<PhysBody*> circles;
 	p2List<PhysBody*> boxes;
@@ -83,6 +99,16 @@ public:
 	Bumper* bumper5;
 	Bumper* bumper6;
 	Bumper* bumper7;
+
+	PhysBody* coin1;
+	PhysBody* coin2;
+	PhysBody* coin3;
+	PhysBody* coin4;
+	PhysBody* coin5;
+	PhysBody* coin6;
+	PhysBody* coin7;
+	PhysBody* coin8;
+
 
 	BoostPad* BoostPad1;
 

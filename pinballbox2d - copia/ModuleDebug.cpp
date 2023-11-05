@@ -172,6 +172,7 @@ void ModuleDebug::DebugDraw()
 				// Draw polygons ------------------------------------------------
 				case b2Shape::e_polygon:
 				{
+					
 					b2PolygonShape* polygonShape = (b2PolygonShape*)f->GetShape();
 					int32 count = polygonShape->GetVertexCount();
 					b2Vec2 prev, v;
