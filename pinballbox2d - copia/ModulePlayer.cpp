@@ -43,7 +43,7 @@ update_status ModulePlayer::Update()
 	sprintf_s(scoreText, 10, "%d", score);
 	sprintf_s(prevScoreText, 10, "%d", prevScore);
 	sprintf_s(maxScoreText, 10, "%d", maxScore);
-	sprintf_s(currentLives, 10, "%d", App->scene_intro->availableBalls-1);
+	sprintf_s(currentLives, 10, "%d", App->scene_intro->availableBalls);
 	App->fonts->BlitText(180, 50, font, scoreText);
 	App->fonts->BlitText(220, 20, font, "pts");
 	App->fonts->BlitText(180, 70, font, "prev");
