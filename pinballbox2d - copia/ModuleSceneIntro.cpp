@@ -117,7 +117,16 @@ bool ModuleSceneIntro::Start()
 	344, 125,
 	344, 252
 	};
-
+	int Wall[16] = {
+	424, 689,
+	424, 512,
+	424, 428,
+	424, 301,
+	424, 262,
+	429, 260,
+	435, 689,
+	427, 697
+	};
 	int Right_Wall[26] = {
 	-45, -2,
 	-46, 40,
@@ -269,6 +278,8 @@ bool ModuleSceneIntro::Start()
 	App->physics->CreateStaticChain(420, 300, Right_Wall, 26);
 	App->physics->CreateStaticChain(0 , 0, Right_DownWall, 16);
 	App->physics->CreateStaticChain(0, 0, CenterWall, 46);
+
+	App->physics->CreateStaticChain(0, 0, Wall, 16);
 
 	App->physics->CreateStaticChain(0, 0, LeftFlipperWall, 18);
 	App->physics->CreateStaticChain(0, 0, RightFlipperWall, 16);
