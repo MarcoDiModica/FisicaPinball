@@ -36,8 +36,9 @@ bool ModuleSceneIntro::Start()
 	//rick = App->textures->Load("pinball/rick_head.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	ring_fx = App->audio->LoadFx("pinball/Audios/ring.wav");
+	palanca_fx = App->audio->LoadFx("pinball/palanca.ogg");
 	//font = App->fonts->Load();
-	App->audio->PlayMusic("pinball/musik.mp3"); // MARCO CAMBIA EL FORMATO DEL ARCHIVO QUE SI NO, NO VA	
+	App->audio->PlayMusic("pinball/musik.ogg"); // MARCO CAMBIA EL FORMATO DEL ARCHIVO QUE SI NO, NO VA	
 	boost_texture = App->textures->Load("pinball/boostpad.png");
 	
 	RingSpin.PushBack({ 0,0, 18,16 });
@@ -348,9 +349,11 @@ update_status ModuleSceneIntro::Update()
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		App->physics->leftFlipper->body->ApplyForceToCenter(b2Vec2(0, -40), true);
+		//App->audio->PlayFx(palanca_fx);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		App->physics->rightFlipper->body->ApplyForceToCenter(b2Vec2(0, -40), true);
+		//App->audio->PlayFx(palanca_fx);
 	}
 
 	if (!App->debug->debug)

@@ -83,6 +83,7 @@ public:
 	SDL_Rect maprect;
 	uint bonus_fx;
 	uint ring_fx;
+	uint palanca_fx;
 
 	p2List<PhysBody*> circles;
 	p2List<PhysBody*> boxes;
