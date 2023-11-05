@@ -11,6 +11,7 @@ If you manage to get all 7 Chaos Emeralds, Sonic will become Super Sonic, and yo
  
 ## Debug Controls
 ### F1-F2: Enter-Exit debug mode.
+### (WHILE IN DEBUG MODE) 1: Generate Sonic at mouse position.
 ### (WHILE IN DEBUG MODE) 5: Toggle gravity manipulation. You can change it pressing W-S.
 ### (WHILE IN DEBUG MODE) 6: Grab Sonic with mouse. You can grab him pressing left mouse button.
 ### (WHILE IN DEBUG MODE) 7: Change FPS. You can change it repeatedly pressing W-S.
