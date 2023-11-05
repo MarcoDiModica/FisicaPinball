@@ -32,13 +32,32 @@ bool ModuleSceneIntro::Start()
 	map = App->textures->Load("pinball/mapa_de_sonic.png");
 	circle = App->textures->Load("pinball/wheel.png"); 
 	//box = App->textures->Load("pinball/a.png");
-	coin = App->textures->Load("pinball/coin.png");
+	coin = App->textures->Load("pinball/ring.png");
 	//rick = App->textures->Load("pinball/rick_head.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	//font = App->fonts->Load();
 	App->audio->PlayMusic("pinball/musik.mp3"); // MARCO CAMBIA EL FORMATO DEL ARCHIVO QUE SI NO, NO VA	
 	boost_texture = App->textures->Load("pinball/boostpad.png");
 	
+	RingSpin.PushBack({ 0,0, 18,16 });
+	RingSpin.PushBack({ 17,0,18,16 });
+	RingSpin.PushBack({ 34,0,18,16 });
+	RingSpin.PushBack({ 51,0,18,16 });
+	RingSpin.PushBack({ 68,0,18,16 });
+	RingSpin.PushBack({ 85,0,18,16 });
+	RingSpin.PushBack({ 102,0,18,16 });
+	RingSpin.PushBack({ 119,0,18,16 });
+	RingSpin.PushBack({ 136,0,18,16 });
+	RingSpin.PushBack({ 153,0,18,16 });
+	RingSpin.PushBack({ 170,0,18,16 });
+	RingSpin.PushBack({ 187,0,18,16 });
+	RingSpin.PushBack({ 204,0,18,16 });
+	RingSpin.PushBack({ 221,0,18,16 });
+	RingSpin.PushBack({ 238,0,18,16 });
+	RingSpin.PushBack({ 255,0,18,16 });
+
+
+	RingAnim = &RingSpin;
 	
 	int mapa_de_sonic[90] = {
 	349, 254,
@@ -341,11 +360,12 @@ update_status ModuleSceneIntro::Update()
 	//	App->physics->restitution = 0.3f;
 	//}
 
+	RingAnim->Update();
 	App->renderer->Blit(map,0,0,&maprect);
-	App->renderer->Blit(coin, 130, 170);
-	App->renderer->Blit(coin, 120, 220);
-	App->renderer->Blit(coin, 120, 270);
-	App->renderer->Blit(coin, 140, 330);
+	App->renderer->Blit(coin, 130, 170, &RingAnim->GetCurrentFrame());
+	App->renderer->Blit(coin, 120, 220, &RingAnim->GetCurrentFrame());
+	App->renderer->Blit(coin, 120, 270, &RingAnim->GetCurrentFrame());
+	App->renderer->Blit(coin, 140, 330 , &RingAnim->GetCurrentFrame());
 	App->renderer->Blit(App->physics->flipTexture1 , App->physics->leftFlipperX - 7, App->physics->leftFlipperY - 7, NULL, 0, App->physics->leftFlipper->body->GetAngle() * RADTODEG, 5, 8 /*alto de la imagen*/);
 	App->renderer->Blit(App->physics->flipTexture2, App->physics->rightFlipperX - 36, App->physics->rightFlipperY - 10, NULL, 0, App->physics->rightFlipper->body->GetAngle() * RADTODEG, 36/*ancho de la imagen*/, 8 /*alto de la imagen*/);
 

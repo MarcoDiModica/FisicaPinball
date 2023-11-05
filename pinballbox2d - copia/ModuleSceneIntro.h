@@ -6,6 +6,7 @@
 #include "p2Point.h"
 #include "Timer.h"
 #include "ModulePhysics.h"
+#include "Animation.h"
 
 #define DEGTORAD 0.0174532925199432957f
 
@@ -51,6 +52,9 @@ public:
 
 	Timer EsmeraldSpawnTimer;
 	uint ActiveEsmeralds;
+
+	Animation* RingAnim;
+	Animation RingSpin;
 
 public:
 	PhysBody* sensor;
