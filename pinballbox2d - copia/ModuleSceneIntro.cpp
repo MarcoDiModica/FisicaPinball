@@ -30,12 +30,13 @@ bool ModuleSceneIntro::Start()
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	map = App->textures->Load("pinball/mapa_de_sonic.png");
-	circle = App->textures->Load("pinball/wheel.png"); 
+	circle = App->textures->Load("pinball/sonic.png"); 
 	//box = App->textures->Load("pinball/a.png");
 	coin = App->textures->Load("pinball/ring.png");
 	//rick = App->textures->Load("pinball/rick_head.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	ring_fx = App->audio->LoadFx("pinball/Audios/ring.wav");
+	boing_fx = App->audio->LoadFx("pinball/Audios/boing.ogg");
 	//font = App->fonts->Load();
 	App->audio->PlayMusic("pinball/musik.mp3"); // MARCO CAMBIA EL FORMATO DEL ARCHIVO QUE SI NO, NO VA	
 	boost_texture = App->textures->Load("pinball/boostpad.png");
@@ -357,6 +358,7 @@ update_status ModuleSceneIntro::Update()
 	{
 		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && availableBalls > 0 && nBalls == 0)
 		{
+			
 			circles.add(App->physics->CreateCircle(410, 580, 10,1.5f));
 			circles.getLast()->data->listener = this;
 			availableBalls--;
@@ -411,9 +413,10 @@ update_status ModuleSceneIntro::Update()
 
 	while (item != NULL)
 	{
+		SDL_Rect cRect = { 0,0,27,25 };
 		int posx, posy;
 		item->data->GetPosition(posx, posy);
-		App->renderer->Blit(circle, posx, posy, NULL, 1, item->data->GetRotation());
+		App->renderer->Blit(circle, posx, posy, &cRect, 1, item->data->GetRotation());
 
 		next_item = item->next;
 
@@ -518,6 +521,10 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		RingSpark.loopCount = 0;
 		App->audio->PlayFx(ring_fx);
 
+	}
+
+	if (bodyB->cType == ColliderType::Cannon || bodyA->cType == ColliderType::Cannon) {
+		App->audio->PlayFx(boing_fx);
 	}
 }
 

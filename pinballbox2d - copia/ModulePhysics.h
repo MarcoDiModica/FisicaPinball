@@ -23,7 +23,8 @@ enum ColliderType {
 	Esmeralds,
 	Boost,
 	notEsmeralds,
-	Ring
+	Ring,
+	Cannon
 };
 
 class PhysBody

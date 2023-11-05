@@ -124,7 +124,8 @@ void ModulePhysics::CreateCanon()
 	canonJointDef.upperAngle = 0 * DEGTORAD;
 	canonJointDef.localAnchorA.Set(0, 0);
 	canonJointDef.localAnchorB.Set(0, 0);
-
+	canonAnchor->cType =ColliderType::Cannon;
+	RightCanon->cType = ColliderType::Cannon;
 	// Create the canon joint
 	b2RevoluteJoint* canonJoint = (b2RevoluteJoint*)world->CreateJoint(&canonJointDef);
 
