@@ -31,11 +31,12 @@ bool ModuleSceneIntro::Start()
 
 	map = App->textures->Load("pinball/mapa_de_sonic.png");
 	circle = App->textures->Load("pinball/sonic.png"); 
-	//box = App->textures->Load("pinball/a.png");
+
 	coin = App->textures->Load("pinball/ring.png");
-	//rick = App->textures->Load("pinball/rick_head.png");
+
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	ring_fx = App->audio->LoadFx("pinball/Audios/ring.wav");
+	dash_fx = App->audio->LoadFx("pinball/Audios/spindash.ogg");
 
 	boing_fx = App->audio->LoadFx("pinball/Audios/boing.ogg");
 
@@ -498,7 +499,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	if (bodyB->cType == ColliderType::Boost && bodyB->Active == true) {
 
 		bodyA->body->ApplyForce(b2Vec2(-20, -100), b2Vec2(0, 0), true);
-
+		App->audio->PlayFx(dash_fx);
 
 	}
 
@@ -513,7 +514,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	
 		if (App->player->collectedEsmeralds > 6) {
 			App->player->score *= 2;
-			circle = App->textures->Load("pinball/super_wheel.png");
+			circle = App->textures->Load("pinball/superSonic.png");
 		}
 		
 

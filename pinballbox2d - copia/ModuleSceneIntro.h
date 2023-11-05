@@ -83,6 +83,7 @@ public:
 	SDL_Rect maprect;
 	uint bonus_fx;
 	uint ring_fx;
+	uint dash_fx;
 
 	uint boing_fx;
 
