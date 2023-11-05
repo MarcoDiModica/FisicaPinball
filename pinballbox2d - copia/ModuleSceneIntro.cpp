@@ -37,7 +37,7 @@ bool ModuleSceneIntro::Start()
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	ring_fx = App->audio->LoadFx("pinball/Audios/ring.wav");
 	dash_fx = App->audio->LoadFx("pinball/Audios/spindash.ogg");
-
+	esmerald_fx = App->audio->LoadFx("pinball/Audios/posibles audios/coin (2).wav");
 	boing_fx = App->audio->LoadFx("pinball/Audios/boing.ogg");
 
 	palanca_fx = App->audio->LoadFx("pinball/palanca.ogg");
@@ -532,6 +532,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		App->player->score += 777;
 		bodyB->Active = false;
 		App->player->collectedEsmeralds++;
+		App->audio->PlayFx(esmerald_fx);
 	
 		if (App->player->collectedEsmeralds > 6) {
 			App->player->score *= 2;

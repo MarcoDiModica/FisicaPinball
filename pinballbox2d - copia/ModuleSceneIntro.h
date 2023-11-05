@@ -88,6 +88,7 @@ public:
 	uint bonus_fx;
 	uint ring_fx;
 	uint dash_fx;
+	uint esmerald_fx;
 
 	uint boing_fx;
 
