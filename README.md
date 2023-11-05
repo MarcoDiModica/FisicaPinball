@@ -3,6 +3,7 @@
 ## How to play:
 Try to get as many points as possible hitting Sonic with the flippers! There are several types of items that give points, so try hitting them all, but be careful, Sonic has only three lives! 
 If you manage to get all 7 Chaos Emeralds, Sonic will become Super Sonic, and your points will be doubled.
+The pink boost pads will help you get around the level, accelerating Sonic at incredible speed and collect all the rings in the level
 
 ## Controls
 ### A-D: Move left and right flipper.
