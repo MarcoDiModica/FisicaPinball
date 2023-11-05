@@ -6,8 +6,8 @@ If you manage to get all 7 Chaos Emeralds, Sonic will become Super Sonic, and yo
 The pink boost pads will help you get around the level, accelerating Sonic at incredible speed and collect all the rings in the level
 
 ## Controls
-### A-D: Move left and right flipper.
-### SPACE: Launch Sonic.
+### LEFT ARROW-RIGHT ARROW: Move left and right flipper.
+### DOWN ARROW: Launch Sonic.
 ### ESC: Exit Application.
  
 ## Debug Controls
