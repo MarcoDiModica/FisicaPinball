@@ -65,6 +65,10 @@ public:
 	Animation* RingAnim6;
 	Animation* RingAnim7;
 	Animation* RingAnim8;
+	Animation* RingAnim9;
+	Animation* RingAnim10;
+	Animation* RingAnim11;
+	Animation* RingAnim12;
 
 
 	Animation RingSpin;
@@ -114,9 +118,14 @@ public:
 	PhysBody* coin6;
 	PhysBody* coin7;
 	PhysBody* coin8;
+	PhysBody* coin9;
+	PhysBody* coin10;
+	PhysBody* coin11;
+	PhysBody* coin12;
 
 
 	BoostPad* BoostPad1;
+	BoostPad* BoostPad2;
 
 	p2List_item<PhysBody*>* item = circles.getFirst();
 

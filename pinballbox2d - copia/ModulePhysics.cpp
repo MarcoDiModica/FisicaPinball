@@ -368,7 +368,7 @@ PhysBody* ModulePhysics::CreateStaticChain(int x, int y, int* points, int size, 
 	return pbody;
 }
 
-BoostPad* ModulePhysics::CreateBoostPad(int x, int y,int* points, int size, ModulePhysics* Physics, int waitTime) {
+BoostPad* ModulePhysics::CreateBoostPad(int x, int y,int* points, int size, ModulePhysics* Physics,b2Vec2 force, int waitTime) {
 
 	
 	b2BodyDef body;
@@ -402,7 +402,7 @@ BoostPad* ModulePhysics::CreateBoostPad(int x, int y,int* points, int size, Modu
 	b->SetUserData(pbody);
 	pbody->width = pbody->height = 0;
 	pbody->cType = ColliderType::Boost;
-
+	pbody->force = force;
 	BoostPad* boost = new BoostPad(pbody);
 	
 	boost->waitTime = waitTime;
